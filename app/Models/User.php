@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes;
     
     protected $fillable = [
         'user_name',
@@ -16,10 +17,17 @@ class User extends Authenticatable implements JWTSubject
         'user_new_email',
         'email_verified_at',
         'user_password',
+        'role_id',
     ];
 
     protected $hidden = [
         'user_password'
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     // for Auth Laravel
@@ -32,5 +40,10 @@ class User extends Authenticatable implements JWTSubject
     public function routeNotificationForMail()
     {
         return $this->user_email;
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

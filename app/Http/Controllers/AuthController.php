@@ -37,7 +37,7 @@ class AuthController extends Controller
             return redirect()
                 ->route('login')
                 ->withInput()
-                ->with('alert_type', 'warning')
+                ->with('type', 'warning')
                 ->with('message', 'username atau password salah');
         }
     }

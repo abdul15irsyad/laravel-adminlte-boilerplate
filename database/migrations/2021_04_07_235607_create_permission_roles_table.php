@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModuleAccessesTable extends Migration
+class CreatePermissionRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,10 @@ class CreateModuleAccessesTable extends Migration
      */
     public function up()
     {
-        Schema::create('module_accesses', function (Blueprint $table) {
+        Schema::create('permission_roles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');	
-            $table->string('module_access_name');
+            $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');	
+            $table->foreignId('permission_id')->constrained('permissions');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 			$table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
@@ -30,6 +30,6 @@ class CreateModuleAccessesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('module_accesses');
+        Schema::dropIfExists('role_accesses');
     }
 }

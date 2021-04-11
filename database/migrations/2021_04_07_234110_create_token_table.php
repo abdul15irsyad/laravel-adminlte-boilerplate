@@ -18,7 +18,7 @@ class CreateTokenTable extends Migration
             $table->id();
             $table->string('token')->unique();
             $table->enum('token_type',['activation','forgot_password']);
-            $table->enum('token_status',['Y','N'])->default('Y');
+            $table->datetime('used_at')->nullable();
             $table->datetime('expired_at');
 			$table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

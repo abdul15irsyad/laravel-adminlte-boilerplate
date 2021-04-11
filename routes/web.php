@@ -26,12 +26,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    $data = [
-        'title' => 'Dasbor',
-        'breadcumbs' => [
-            ['text' => 'Dasbor', 'status' => 'active', 'link' => '#'],
-        ],
-    ];
-    return view('content.dashboard.index', $data);
-});
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

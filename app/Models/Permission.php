@@ -1,20 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Token extends Model
+class Permission extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'token',
-        'token_type',
-        'used_at',
-        'expired_at',
-        'user_id',
+        'permission_name',
+        'permission_slug',
     ];
 
     protected $dates = [
@@ -23,8 +21,9 @@ class Token extends Model
         'deleted_at',
     ];
 
-    public function user()
+    public function permission_roles()
     {
-        return $this->belongsTo(Role::class, 'user_id', 'id');
+        return $this->hasMany(PermissionRole::class);
     }
 }
+
