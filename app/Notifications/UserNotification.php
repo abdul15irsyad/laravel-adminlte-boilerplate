@@ -10,7 +10,8 @@ use Illuminate\Notifications\Notification;
 class UserNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-    private $data;
+    private $mail;
+    private $database;
 
     /**
      * Create a new notification instance.
@@ -19,7 +20,8 @@ class UserNotification extends Notification implements ShouldQueue
      */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->mail = $data['mail'];
+        $this->database = $data['database'];
     }
 
     /**
@@ -42,8 +44,8 @@ class UserNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject($this->data['mail']['subject'])
-            ->view('mail.' . $this->data['mail']['view'], $this->data['mail']);
+            ->subject($this->mail['subject'])
+            ->markdown($this->mail['markdown'], $this->mail);
     }
 
     /**
@@ -54,6 +56,6 @@ class UserNotification extends Notification implements ShouldQueue
      */
     public function toArray($notifiable)
     {
-        return $this->data['database'];
+        return $this->database;
     }
 }

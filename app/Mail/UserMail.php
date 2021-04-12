@@ -11,7 +11,7 @@ use Illuminate\Support\Env;
 class UserMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    private $data;
+    public $data;
 
     /**
      * Create a new message instance.
@@ -30,8 +30,8 @@ class UserMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'),'Hoya E-Voucher')
+        return $this->from(env('MAIL_FROM_ADDRESS'),env('APP_NAME'))
             ->subject($this->data['subject'])
-            ->view('mail.'.$this->data['view'],$this->data);
+            ->markdown($this->data['markdown'], $this->data);
     }
 }
