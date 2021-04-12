@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use TokenHelper;
 
 class AuthController extends Controller
 {
@@ -20,7 +21,7 @@ class AuthController extends Controller
         $data = [
             'title' => 'Login'
         ];
-        return view('content.login', $data);
+        return view('contents.login', $data);
     }
 
     public function login_process(Request $request)
@@ -41,12 +42,79 @@ class AuthController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function verify_email_process(Request $request)
+    {
+        $username = $request->input('username');
+        $token = $request->input('token');
+
+        $user = User::where('user_username',$username)->first();
+        // if user not found
+        if(!$user){
+            return redirect()
+                ->route('forgot.password')
+                ->with('type', 'warning')
+                ->with('message', 'Invalid link');
+        }
+
+        $token = Token::where('token', $token)
+            ->where('token_status', 'Y')
+            ->where('used_at',null)
+            ->where('token_type', 'email_verification')
+            ->first();
+        
+        // if token invalid
+        if(!$token){
+            return redirect()
+                ->route('forgot.password')
+                ->with('type', 'warning')
+                ->with('message', 'Invalid link');
+        }
+
+        // if token expired
+        if(Carbon::now()->gt($token->expired_at)){
+            $token->token_status = 'N';
+            $token->save();
+            return redirect()
+                ->route('forgot.password')
+                ->with('type', 'warning')
+                ->with('message', 'Link expired, please make a new forgot password request');
+        }
+
+        // update token
+        $token->token_status = 'N';
+        $token->used_at = Carbon::now();
+        $token->save();
+
+        // update user password
+        $user->email_verified_at = Carbon::now();
+        $user->save();
+
+        // notify user
+        $data = [
+            'database' => [
+                'title' => 'Email Verification Success',
+                'desc' => 'Your email has been activated'
+            ],
+            'mail' => [
+                'subject' => 'Email Verification Success',
+                'markdown' => 'mails.verify-email-success',
+                'user' => $user,
+            ]
+        ];
+        $user->notify(new UserNotification($data));
+
+        return redirect()
+            ->route('login')
+            ->with('type', 'success')
+            ->with('message', 'Your email has been activated');
+    }
+
     public function forgot_password()
     {
         $data = [
             'title' => 'Forgot Password'
         ];
-        return view('content.forgot-password', $data);
+        return view('contents.forgot-password', $data);
     }
 
     public function forgot_password_process(Request $request)
@@ -70,13 +138,17 @@ class AuthController extends Controller
                 ->with('type', 'warning')
                 ->with('message', 'Email not linked with any user');
         }
+
+        if(!$user->email_verified_at){
+            return redirect()
+                ->route('forgot.password')
+                ->withInput()
+                ->with('type', 'warning')
+                ->with('message', 'Verify your email first in your email');
+        }
         
-        // loop generate token if exist
-        do {
-            $new_token = Str::random(64);
-            // $expired_at = date('Y-m-d H:i:s', strtotime('+1 hours'));
-            $token_exist = Token::where('token', $new_token)->where('token_type', 'forgot_password')->where('token_status', 'Y')->where('used_at',null)->first();
-        } while ($token_exist !== null);
+        // generate token
+        $new_token = TokenHelper::generate_token('forgot_password');
         
         // if user have previous token
         $previous_token = Token::where('token_type', 'forgot_password')->where('token_status', 'Y')->where('used_at',null)->where('user_id', $user['id'])->first();
@@ -90,7 +162,7 @@ class AuthController extends Controller
         $token = new Token;
         $token->token = $new_token;
         $token->token_type = 'forgot_password';
-        $token->user_id = $user['id'];
+        $token->user_id = $user->id;
         $token->expired_at = $expired_at;
         $token->save();
         
@@ -148,20 +220,12 @@ class AuthController extends Controller
                 ->with('message', 'Link expired, please make a new forgot password request');
         }
 
-        // if token inactive
-        if ($token->token_status != 'Y') {
-            return redirect()
-                ->route('forgot.password')
-                ->with('type', 'warning')
-                ->with('message', 'Invalid link');
-        }
-
         // token valid
         $data = [
             'token' => $token,
             'title' => 'Reset Password'
         ];
-        return view('content.reset-password', $data);
+        return view('contents.reset-password', $data);
     }
 
     public function reset_password_process(Request $request)
@@ -179,7 +243,11 @@ class AuthController extends Controller
         $token = $request->input('token');
         $password = $request->input('new_password');
         
-        $token = Token::where('token', $token)->where('token_status', 'Y')->where('used_at',null)->where('token_type', 'forgot_password')->first();
+        $token = Token::where('token', $token)
+            ->where('token_status', 'Y')
+            ->where('used_at',null)
+            ->where('token_type', 'forgot_password')
+            ->first();
         // if token invalid
         if(!$token){
             return redirect()
@@ -204,7 +272,6 @@ class AuthController extends Controller
         $token->save();
 
         // update user password
-        $user = User::find($token->user_id)->first();
         $user->user_password = Hash::make($password);
         $user->save();
         

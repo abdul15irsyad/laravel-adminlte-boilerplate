@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 
+// no middleware
+Route::get('/verify-email-process', [AuthController::class, 'verify_email_process'])->name('verify.email.process');
+
+// not authenticated
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/',function(){
         return redirect()->route('login');
@@ -16,6 +20,7 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/reset-password-process', [AuthController::class, 'reset_password_process'])->name('reset.password.process');
 });
 
+// authenticated
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/',function(){
         return redirect()->route('dashboard');

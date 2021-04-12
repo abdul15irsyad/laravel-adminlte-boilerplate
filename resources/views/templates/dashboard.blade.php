@@ -10,13 +10,13 @@
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
     <div class="wrapper">
-        @include('include.navbar-dashboard')
+        @include('includes.navbar-dashboard')
 
-        @include('include.sidebar-dashboard')
+        @include('includes.sidebar-dashboard')
 
         @yield('content')
 
-        @include('include.footer-dashboard')
+        @include('includes.footer-dashboard')
     </div>
     <!-- ./wrapper -->
     @endsection

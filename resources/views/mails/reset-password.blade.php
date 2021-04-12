@@ -1,5 +1,6 @@
 @component('mail::message')
 # Reset Password
+
 Hello, {{ $user->user_username }}<br>
 You recently asked to reset your password on the {{ config('app.name') }}. Click the button below to reset.
 

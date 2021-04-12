@@ -1,14 +1,9 @@
 @extends('templates.dashboard')
 
-@section('content-style')
-<!-- Ionicons -->
-<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-@endsection
-
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    @include('include.header-dashboard',['content_title'=>'Dasbor'])
+    @include('includes.header-dashboard',['content_title'=>$title])
 
     <!-- Main content -->
     <section class="content content-dashboard">
@@ -20,7 +15,7 @@
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-user-tag"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">ECP</span>
-                            <span class="info-box-number">20 <small>Orang</small></span>
+                            <span class="info-box-number">20 <small>People</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -31,8 +26,8 @@
                     <div class="info-box mb-3">
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-users"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Pelanggan</span>
-                            <span class="info-box-number">20 <small>Orang</small></span>
+                            <span class="info-box-text">Customers</span>
+                            <span class="info-box-number">20 <small>People</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -48,8 +43,8 @@
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-tags"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Promo Aktif</span>
-                            <span class="info-box-number">20 <small>Promo</small></span>
+                            <span class="info-box-text">Active Promo</span>
+                            <span class="info-box-number">20 <small>Promos</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -61,8 +56,8 @@
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-qrcode"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Voucher</span>
-                            <span class="info-box-number">20 <small>voucher</small></span>
+                            <span class="info-box-text">Vouchers</span>
+                            <span class="info-box-number">20 <small>Vouchers</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
