@@ -10,7 +10,7 @@
     <!-- SEARCH FORM -->
     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <input class="form-control form-control-navbar" type="search" placeholder="{{ __('dashboard.search') }}" aria-label="Search">
         <div class="input-group-append">
           <button class="btn btn-navbar" type="submit">
             <i class="fas fa-search"></i>
@@ -23,7 +23,7 @@
     <ul class="navbar-nav ml-auto">
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item mr-3">
-            <a class="nav-link" href="#" title="Notifikasi">
+            <a class="nav-link" href="#" title="{{ __('dashboard.notification') }}">
                 <i class="far fa-bell"></i>
                 @if(auth()->user()->unreadNotifications->count()>0)
                 <span class="badge badge-danger navbar-badge">{{ auth()->user()->unreadNotifications->count() }}</span>
@@ -36,11 +36,11 @@
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                 <a href="#" class="dropdown-item">
-                    <i class="fas fa-user fa-fw mr-2"></i> Profil
+                    <i class="fas fa-user fa-fw mr-2"></i> {{ __('dashboard.profile') }}
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item hover-danger" data-toggle="modal" data-target="#modal-logout">
-                    <i class="fas fa-sign-out-alt fa-fw mr-2"></i> Keluar
+                    <i class="fas fa-sign-out-alt fa-fw mr-2"></i> {{ __('dashboard.logout') }}
                 </a>
             </div>
         </li>
@@ -52,17 +52,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Logout Confirmation</h5>
+                <h5 class="modal-title">{{ __('dashboard.logout-confirmation') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>logout from <b>{{ auth('web')->user()->user_username }}</b> account ?</p>
+                <p>{!! __('dashboard.logout-confirmation-text',['username' => auth()->user()->user_username]) !!}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="{{ route('logout') }}" class="btn btn-danger btn-logout">Yes, Logout</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('dashboard.cancel') }}</button>
+                <a href="{{ route('logout',['locale' => config('app.locale')]) }}" class="btn btn-danger btn-logout">{{ __('dashboard.yes-logout') }}</a>
             </div>
         </div>
     </div>

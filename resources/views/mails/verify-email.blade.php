@@ -1,14 +1,14 @@
 @component('mail::message')
-# Email Verification
+# {{ __('auth.verify-email') }}
 
-Hello, {{ $user->user_username }}<br>
-Please click button below to verify your email on {{ config('app.name') }} account.
+{{ __('auth.hello-username',['username' => $user->user_username]) }}<br>
+{{ __('auth.text1-verify-email-mail',['app_name' => config('app.name')]) }}
 
-@component('mail::button', ['url' => route('verify.email.process',['username'=>$user->user_username,'token'=>$token->token])])
-Verify Email
+@component('mail::button', ['url' => route('verify.email.process', ['locale'=> config('app.locale'), 'username'=>$user->user_username, 'token'=>$token->token] )])
+{{ __('auth.verify-email') }}
 @endcomponent
 
-This link only valid until {{ date_format($token->expired_at,'H:i - F j, Y') }}, if you do not request an email verification, please ignore this email.<br><br>
-Thanks,<br>
+{{ __('auth.text2-verify-email-mail',['expired_at' => date_format($token->expired_at,'H:i - F j, Y')]) }}<br><br>
+{{ __('auth.thanks') }},<br>
 {{ config('app.name') }}
 @endcomponent

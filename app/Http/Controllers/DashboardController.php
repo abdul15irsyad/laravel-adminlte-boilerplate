@@ -8,9 +8,9 @@ class DashboardController extends Controller
 {
     public function index() {
         $data = [
-            'title' => 'Dashboard',
+            'title' => __('dashboard.dashboard'),
             'breadcumbs' => [
-                ['text' => 'Dashboard', 'status' => 'active', 'link' => '#'],
+                ['text' => __('dashboard.dashboard'), 'status' => 'active', 'link' => '#'],
             ],
         ];
         return view('contents.dashboard.index', $data);

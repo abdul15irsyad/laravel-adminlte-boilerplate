@@ -5,26 +5,32 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 
 // no middleware
-Route::get('/verify-email-process', [AuthController::class, 'verify_email_process'])->name('verify.email.process');
+Route::prefix('{locale}')->group(function(){
+    Route::get('/verify-email-process', [AuthController::class, 'verify_email_process'])->name('verify.email.process');
+});
 
 // not authenticated
-Route::group(['middleware' => 'guest'], function () {
+Route::middleware(['guest'])->group(function () {
     Route::get('/',function(){
-        return redirect()->route('login');
+        return redirect()->route('login',['locale'=>app()->getLocale()]);
     });
-    Route::get('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/login', [AuthController::class, 'login_process'])->name('login');
-    Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->name('forgot.password');
-    Route::post('/forgot-password-process', [AuthController::class, 'forgot_password_process'])->name('forgot.password.process');
-    Route::get('/reset-password', [AuthController::class, 'reset_password'])->name('reset.password');
-    Route::post('/reset-password-process', [AuthController::class, 'reset_password_process'])->name('reset.password.process');
+    Route::prefix('{locale}')->group(function(){
+        Route::get('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/login', [AuthController::class, 'login_process'])->name('login');
+        Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->name('forgot.password');
+        Route::post('/forgot-password-process', [AuthController::class, 'forgot_password_process'])->name('forgot.password.process');
+        Route::get('/reset-password', [AuthController::class, 'reset_password'])->name('reset.password');
+        Route::post('/reset-password-process', [AuthController::class, 'reset_password_process'])->name('reset.password.process');
+    });
 });
 
 // authenticated
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/',function(){
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard',['locale'=>app()->getLocale()]);
     });
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::prefix('{locale}')->group(function(){
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    });
 });

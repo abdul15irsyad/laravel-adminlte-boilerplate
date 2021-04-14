@@ -39,36 +39,9 @@
                 [5, 10, 20, 50],
                 [5, 10, 20, 50]
             ],
-            language: {
-                emptyTable: "Tidak ada data",
-                info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                infoEmpty: "Showing 0 to 0 of 0 entries",
-                infoFiltered: "(Disaring dari _MAX_ data)",
-                lengthMenu: "Tampilkan _MENU_ per halaman",
-                paginate: {
-                    first: "Pertama",
-                    last: "Terakhir",
-                    next: "<span title='Selanjutnya'><i class='fa fa-forward'></i></span>",
-                    previous: "<span title='Sebelumnya'><i class='fa fa-backward'></i></span>"
-                },
-                processing: "Memuat...",
-                search: "_INPUT_",
-                searchPlaceholder: "Cari disini...",
-                zeroRecords: "Tidak ditemukan",
-            },
+            language: <?= json_encode(__('dashboard.datatables-language')) ?>,
         }
-        var defaultLanguageDatepicker = {
-            days: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"],
-            daysShort: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
-            daysMin: ["Mi", "Sn", "Sl", "Ra", "Ka", "Ju", "Sa"],
-            months: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"],
-            monthsShort: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"],
-            today: "Hari ini",
-            clear: "Hapus",
-            titleFormat: "MM yyyy",
-            /* Leverages same syntax as 'format' */
-            weekStart: 1
-        }
+        var defaultLanguageDatepicker = <?= json_encode(__('dashboard.datepicker-language')) ?>
         var defaultDatepicker = {
             autoclose: true,
             format: 'd MM yyyy',

@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://127.0.0.1:8012'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -94,6 +94,22 @@ return [
     */
 
     'fallback_locale' => 'en',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Fallback Locale
+    |--------------------------------------------------------------------------
+    |
+    | The fallback locale determines the locale to use when the current one
+    | is not available. You may change the value to correspond to any of
+    | the language folders that are provided through your application.
+    |
+    */
+
+    'available_locale' => [
+        ['locale' => 'en', 'text' => 'English'],
+        ['locale' => 'id', 'text' => 'Bahasa'],
+    ],
 
     /*
     |--------------------------------------------------------------------------

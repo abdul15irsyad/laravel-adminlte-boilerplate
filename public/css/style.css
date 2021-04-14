@@ -1,0 +1,96 @@
+/* Root */
+:root{
+  --primary: #0074bc !important;
+}
+
+.border-none{
+  border: none !important;
+}
+
+/* Datepicker */
+input.datepicker{
+  cursor: pointer;
+}
+
+/* Anchor */
+a.inherit{
+  text-decoration: none;
+  color: inherit !important;
+}
+
+/* Table */
+table.table,table.table .dtr-details{
+  width: 100% !important;
+}
+
+table.table-datatable thead th:last-child{
+  min-width: 148px !important;
+}
+
+table.table :is(td,th){
+  vertical-align: middle !important;
+}
+
+/* Hover */
+.hover-danger:hover{
+  background-color: var(--danger) !important;
+  color: white;
+}
+
+/* Login Page */
+.login-page .login-box{
+  width: 400px;
+}
+
+/* Input Select */
+select{
+  cursor: pointer !important;
+}
+
+/* Input Invalid */
+input.form-control.is-invalid, select.form-control.is-invalid{
+  background-image: none !important;
+}
+
+input.form-control.is-invalid{
+  border-radius: 4px !important;
+}
+
+input.is-invalid ~ .input-group-append .input-group-text,
+.input-password.input-group input.is-invalid:active ~ .input-group-append .input-group-text,
+.input-password.input-group input.is-invalid:focus ~ .input-group-append .input-group-text{
+  border-color: var(--danger);
+}
+
+/* Input Password */
+.input-password.input-group input{
+  border-bottom-right-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+  border-right: none !important;
+}
+
+.input-password.input-group input:active ~ .input-group-append .input-group-text,
+.input-password.input-group input:focus ~ .input-group-append .input-group-text{
+  border-color: rgb(128,189,255);
+}
+
+.input-password.input-group .input-group-text{
+  background-color: #fff;
+  border-left: none !important;
+  border-bottom-right-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+}
+
+.input-password.input-group .input-group-text span{
+  cursor: pointer;
+}
+
+/* Content Wrapper */
+.content-wrapper{
+  padding-bottom: .5rem;
+}
+
+/* Disabled Button */
+.btn.disabled, .btn:disabled{
+  cursor: default;
+}

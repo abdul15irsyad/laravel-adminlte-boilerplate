@@ -1,9 +1,9 @@
 @component('mail::message')
-# Reset Password Success
+# {{ __('auth.reset-password-success') }}
 
-Hello, {{ $user->user_username }}<br>
-Your password is successfully changed, please login using your new password
+{{ __('auth.hello-username',['username' => $user->user_username]) }}<br>
+{{ __('auth.reset-password-success-alert') }}.
 
-Thanks,<br>
+{{ __(('auth.thanks')) }},<br>
 {{ config('app.name') }}
 @endcomponent

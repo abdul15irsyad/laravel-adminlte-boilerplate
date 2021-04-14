@@ -1,9 +1,9 @@
 @component('mail::message')
-# Email Verification Success
+# {{ __('auth.email-verification-success') }}
 
-Hello, {{ $user->user_username }}<br>
-Your email has been verified, please use your new email on next login
+{{ __('auth.hello-username',['username' => $user->user_username]) }}<br>
+{{ __('auth.your-email-has-been-verified') }}.
 
-Thanks,<br>
+{{ __('auth.thanks') }}
 {{ config('app.name') }}
 @endcomponent

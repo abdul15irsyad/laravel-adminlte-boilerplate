@@ -16,10 +16,15 @@ use TokenHelper;
 
 class AuthController extends Controller
 {
+    public function __construct(Request $request)
+    {
+        parent::__construct();
+    }
+
     public function login()
     {
         $data = [
-            'title' => 'Login'
+            'title' => __('auth.login')
         ];
         return view('contents.login', $data);
     }
@@ -34,12 +39,12 @@ class AuthController extends Controller
 
         if (!auth('web')->attempt($data)) {
             return redirect()
-                ->route('login')
+                ->route('login',['locale' => config('app.locale')])
                 ->withInput()
                 ->with('type', 'warning')
-                ->with('message', 'Username or Password is incorrect');
+                ->with('message', __('auth.wrong-credential'));
         }
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard',['locale' => config('app.locale')]);
     }
 
     public function verify_email_process(Request $request)
@@ -51,9 +56,9 @@ class AuthController extends Controller
         // if user not found
         if(!$user){
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot.password',['locale' => config('app.locale')])
                 ->with('type', 'warning')
-                ->with('message', 'Invalid link');
+                ->with('message', __('auth.invalid-link'));
         }
 
         $token = Token::where('token', $token)
@@ -65,9 +70,9 @@ class AuthController extends Controller
         // if token invalid
         if(!$token){
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot.password',['locale' => config('app.locale')])
                 ->with('type', 'warning')
-                ->with('message', 'Invalid link');
+                ->with('message', __('auth.invalid-link'));
         }
 
         // if token expired
@@ -75,9 +80,9 @@ class AuthController extends Controller
             $token->token_status = 'N';
             $token->save();
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot.password',['locale' => config('app.locale')])
                 ->with('type', 'warning')
-                ->with('message', 'Link expired, please make a new forgot password request');
+                ->with('message', __('auth.link-expired'));
         }
 
         // update token
@@ -92,11 +97,11 @@ class AuthController extends Controller
         // notify user
         $data = [
             'database' => [
-                'title' => 'Email Verification Success',
-                'desc' => 'Your email has been activated'
+                'title' => __('auth.email-verification-success'),
+                'desc' => __('auth.your-email-has-been-verified')
             ],
             'mail' => [
-                'subject' => 'Email Verification Success',
+                'subject' => __('auth.email-verification-success'),
                 'markdown' => 'mails.verify-email-success',
                 'user' => $user,
             ]
@@ -104,15 +109,15 @@ class AuthController extends Controller
         $user->notify(new UserNotification($data));
 
         return redirect()
-            ->route('login')
+            ->route('login',['locale' => config('app.locale')])
             ->with('type', 'success')
-            ->with('message', 'Your email has been activated');
+            ->with('message', __('auth.your-email-has-been-verified'));
     }
 
     public function forgot_password()
     {
         $data = [
-            'title' => 'Forgot Password'
+            'title' => __('auth.forgot-password')
         ];
         return view('contents.forgot-password', $data);
     }
@@ -121,9 +126,6 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'email' => 'required|email',
-        ], [
-            'email.required' => 'email is required',
-            'email.email' => 'use email format, eg: example@email.com',
         ]);
 
         $email = $request->input('email');
@@ -133,18 +135,18 @@ class AuthController extends Controller
         // if no user with email
         if(!$user){
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot.password',['locale' => config('app.locale')])
                 ->withInput()
                 ->with('type', 'warning')
-                ->with('message', 'Email not linked with any user');
+                ->with('message', __('auth.email-not-found'));
         }
 
         if(!$user->email_verified_at){
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot.password',['locale' => config('app.locale')])
                 ->withInput()
                 ->with('type', 'warning')
-                ->with('message', 'Verify your email first in your email');
+                ->with('message', __('auth.verify-first'));
         }
         
         // generate token
@@ -168,7 +170,7 @@ class AuthController extends Controller
         
         // send token to user email
         $data = [
-            'subject' => 'Reset Password',
+            'subject' => __('auth.reset-password'),
             'user' => $user,
             'token' => $token,
             'markdown' => 'mails.reset-password',
@@ -176,10 +178,10 @@ class AuthController extends Controller
         Mail::to($user->user_email)->send(new UserMail($data));
         
         return redirect()
-            ->route('forgot.password')
+            ->route('forgot.password',['locale' => config('app.locale')])
             ->withInput()
             ->with('type', 'success')
-            ->with('message', 'Email sent, please check your email');
+            ->with('message', __('auth.forgot-password-success'));
     }
 
     public function reset_password(Request $request)
@@ -191,9 +193,9 @@ class AuthController extends Controller
         // if user not found
         if(!$user){
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot.password',['locale' => config('app.locale')])
                 ->with('type', 'warning')
-                ->with('message', 'Invalid link');
+                ->with('message', __('auth.invalid-link'));
         }
 
         $token = Token::where('token', $token)
@@ -205,9 +207,9 @@ class AuthController extends Controller
         // if token invalid
         if(!$token){
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot.password',['locale' => config('app.locale')])
                 ->with('type', 'warning')
-                ->with('message', 'Invalid link');
+                ->with('message', __('auth.invalid-link'));
         }
 
         // if token expired
@@ -215,15 +217,15 @@ class AuthController extends Controller
             $token->token_status = 'N';
             $token->save();
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot.password',['locale' => config('app.locale')])
                 ->with('type', 'warning')
-                ->with('message', 'Link expired, please make a new forgot password request');
+                ->with('message', __('auth.link-expired'));
         }
 
         // token valid
         $data = [
             'token' => $token,
-            'title' => 'Reset Password'
+            'title' => _('auth.reset-password')
         ];
         return view('contents.reset-password', $data);
     }
@@ -233,11 +235,6 @@ class AuthController extends Controller
         $this->validate($request, [
             'new_password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])./',
             'confirm_password' => 'same:new_password'
-        ], [
-            'new_password.required' => 'Password is required',
-            'new_password.min' => 'Minimum password 8 characters',
-            'new_password.regex' => 'Passwords must contain lowercase letters (A-Z), uppercase (A-Z), and numbers (0-9)',
-            'confirm_password.same' => 'Confirm Password didn\'t match',
         ]);
 
         $token = $request->input('token');
@@ -253,7 +250,7 @@ class AuthController extends Controller
             return redirect()
                 ->route('forgot.password')
                 ->with('type', 'warning')
-                ->with('message', 'Invalid link');
+                ->with('message', __('auth.invalid-link'));
         }
 
         // if token expired
@@ -263,7 +260,7 @@ class AuthController extends Controller
             return redirect()
                 ->route('forgot.password')
                 ->with('type', 'warning')
-                ->with('message', 'Link expired, please make a new forgot password request');
+                ->with('message', __('auth.link-expired'));
         }
 
         // update token
@@ -278,11 +275,11 @@ class AuthController extends Controller
         // notify user
         $data = [
             'database' => [
-                'title' => 'Reset Password Success',
-                'desc' => 'Your password has been successfully changed'
+                'title' => __('auth.reset-password-success'),
+                'desc' => __('auth.your-password-has-been-successfully-changed')
             ],
             'mail' => [
-                'subject' => 'Reset Password Success',
+                'subject' => __('auth.reset-password-success'),
                 'markdown' => 'mails.reset-password-success',
                 'user' => $user,
             ]
@@ -290,14 +287,14 @@ class AuthController extends Controller
         $user->notify(new UserNotification($data));
 
         return redirect()
-            ->route('login')
+            ->route('login', ['locale' => config('app.locale')])
             ->with('type', 'success')
-            ->with('message', 'Password successfully changed, please login with a new password');
+            ->with('message', __('auth.reset-password-success-alert'));
     }
 
     public function logout()
     {
         auth('web')->logout();
-        return redirect()->route('login');
+        return redirect()->route('login', ['locale' => config('app.locale')]);
     }
 }

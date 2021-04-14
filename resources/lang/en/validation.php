@@ -134,8 +134,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'new_password' => [
+            'regex' => ':attribute must contain lowercase letters (a-z), uppercase (A-Z), and numbers (0-9)',
         ],
     ],
 
@@ -150,6 +150,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'new_password' => 'new password',
+        'confirm_password' => 'confirm password',
+    ],
 
 ];
