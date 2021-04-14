@@ -39,10 +39,10 @@
                 [5, 10, 20, 50],
                 [5, 10, 20, 50]
             ],
-            language: <?= json_encode(__('dashboard.datatables-language')) ?>,
-        }
-        var defaultLanguageDatepicker = <?= json_encode(__('dashboard.datepicker-language')) ?>
-        var defaultDatepicker = {
+            language:<?= json_encode(__('dashboard.datatables-language')) ?>,
+        };
+        let defaultLanguageDatepicker = <?= json_encode(__('dashboard.datepicker-language')) ?>;
+        let defaultDatepicker = {
             autoclose: true,
             format: 'd MM yyyy',
             language: "in",
@@ -50,30 +50,30 @@
             todayHighlight: true,
             todayBtn: "linked",
         }
-        var gateButton = (item, moduleGate) => {
-            var actionList = new DOMParser().parseFromString(item.action, "text/xml")
-            var btnShow = actionList.documentElement.querySelector('.btn-show')
+        let gateButton = (item, moduleGate) => {
+            let actionList = new DOMParser().parseFromString(item.action, "text/xml")
+            let btnShow = actionList.documentElement.querySelector('.btn-show')
             if (btnShow) {
                 if (!moduleGate.show) {
-                    var parent = btnShow.parentElement
+                    let parent = btnShow.parentElement
                     parent.remove()
                 }
             }
-            var btnEdit = actionList.documentElement.querySelector('.btn-edit')
+            let btnEdit = actionList.documentElement.querySelector('.btn-edit')
             if (btnEdit) {
                 if (!moduleGate.edit) {
-                    var parent = btnEdit.parentElement
+                    let parent = btnEdit.parentElement
                     parent.remove()
                 }
             }
-            var btnDeleteModal = actionList.documentElement.querySelector('.btn-delete-modal')
+            let btnDeleteModal = actionList.documentElement.querySelector('.btn-delete-modal')
             if (btnDeleteModal) {
                 if (!moduleGate.delete) {
-                    var parent = btnDeleteModal.parentElement
+                    let parent = btnDeleteModal.parentElement
                     parent.remove()
                 }
             }
-            var temp = document.createElement('div')
+            let temp = document.createElement('div')
             temp.appendChild(actionList.documentElement)
             item.action = temp.innerHTML
         }

@@ -14,6 +14,10 @@ return [
     'admin' => 'Admin',
     'customers' => 'Pelanggan',
     // datatables
+    'name' => 'Nama',
+    'username' => 'Username',
+    'email' => 'Email',
+    'action' => 'Aksi',
     'datatables-language' => [
         'emptyTable' => 'Tidak ada data',
         'info' => 'Menampilkan _START_ sampai _END_ dari _TOTAL_ data',

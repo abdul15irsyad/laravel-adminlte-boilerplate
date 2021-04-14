@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 
 // no middleware
 Route::prefix('{locale}')->group(function(){
@@ -30,7 +31,14 @@ Route::middleware(['auth'])->group(function () {
         return redirect()->route('dashboard',['locale'=>app()->getLocale()]);
     });
     Route::prefix('{locale}')->group(function(){
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        // dashboard
+        Route::prefix('dashboard')->group(function(){
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        });
+        // users
+        Route::prefix('users')->group(function(){
+            Route::get('/', [UserController::class, 'index'])->name('users');
+        });
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     });
 });

@@ -14,6 +14,10 @@ return [
     'admin' => 'Admin',
     'customers' => 'Customers',
     // datatables
+    'name' => 'Name',
+    'username' => 'Username',
+    'email' => 'Email',
+    'action' => 'Action',
     'datatables-language' => [
         'emptyTable' => 'Data not found',
         'info' => 'Showing _START_ to _END_ of _TOTAL_ entries',
