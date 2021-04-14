@@ -141,6 +141,7 @@ class AuthController extends Controller
                 ->with('message', __('auth.email-not-found'));
         }
 
+        // if user's email not verified
         if(!$user->email_verified_at){
             return redirect()
                 ->route('forgot.password',['locale' => config('app.locale')])

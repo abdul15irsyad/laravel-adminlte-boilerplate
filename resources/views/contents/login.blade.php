@@ -7,7 +7,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <h2 class="mb-0"><b>Admin</b>LTE</h2>
+                <h2 class="mb-0"><b>Laravel</b> Boilerplate</h2>
                 <h4 class="mb-0">{{__('auth.login')}}</h4>
             </div>
             <div class="card-body">
