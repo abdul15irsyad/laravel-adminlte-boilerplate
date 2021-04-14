@@ -24,6 +24,18 @@
             <p>{{ __('dashboard.users') }}</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('roles',['locale' => config('app.locale')]) }}" class="nav-link {{ $title==__('dashboard.roles') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-users-cog"></i>
+            <p>{{ __('dashboard.roles') }}</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('permission-roles',['locale' => config('app.locale')]) }}" class="nav-link {{ $title==__('dashboard.permission-roles') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-users-cog"></i>
+            <p>{{ __('dashboard.permission-roles') }}</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

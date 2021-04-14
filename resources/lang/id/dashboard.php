@@ -11,12 +11,16 @@ return [
     'cancel' => 'Batal',
     'yes-logout' => 'Ya, Keluar',
     'users' => 'Pengguna',
-    'admin' => 'Admin',
-    'customers' => 'Pelanggan',
+    'roles' => 'Peran',
+    'permission' => 'Akses',
+    'permission-roles' => 'Akses Peran',
     // datatables
     'name' => 'Nama',
     'username' => 'Username',
     'email' => 'Email',
+    'role' => 'Peran',
+    'role-name' => 'Nama Peran',
+    'description' => 'Deskripsi',
     'action' => 'Aksi',
     'datatables-language' => [
         'emptyTable' => 'Tidak ada data',

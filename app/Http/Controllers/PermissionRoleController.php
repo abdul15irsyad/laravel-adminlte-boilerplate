@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\PermissionRole;
 use DataTables;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class PermissionRoleController extends Controller
 {
-    public function get_users(Request $request)
+    public function get_permission_roles(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::with(['role'])->get();
+            $data = PermissionRole::with(['role','permission'])->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -29,12 +29,12 @@ class UserController extends Controller
     public function index()
     {
         $data = [
-            'title' => __('users.users'),
+        'title' => __('permission-roles.permission-roles'),
             'breadcumbs' => [
                 ['text' => __('dashboard.dashboard'), 'status' => null, 'link' => route('dashboard',['locale'=>config('app.locale')])],
-                ['text' => __('users.users'), 'status' => 'active', 'link' => '#'],
+                ['text' => __('permission-roles.permission-roles'), 'status' => 'active', 'link' => '#'],
             ],
         ];
-        return view('contents.users.index', $data);
+        return view('contents.permission-roles.index', $data);
     }
 }

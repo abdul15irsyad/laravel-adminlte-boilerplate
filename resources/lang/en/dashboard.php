@@ -11,12 +11,16 @@ return [
     'cancel' => 'Cancel',
     'yes-logout' => 'Yes, Logout',
     'users' => 'Users',
-    'admin' => 'Admin',
-    'customers' => 'Customers',
+    'roles' => 'Roles',
+    'permission' => 'Permission',
+    'permission-roles' => 'Permission Roles',
     // datatables
     'name' => 'Name',
     'username' => 'Username',
     'email' => 'Email',
+    'role' => 'Role',
+    'role-name' => 'Role Name',
+    'description' => 'Description',
     'action' => 'Action',
     'datatables-language' => [
         'emptyTable' => 'Data not found',

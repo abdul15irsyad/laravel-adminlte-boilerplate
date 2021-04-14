@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PermissionRoleController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -15,6 +17,17 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::group([],function () {
-    Route::post('/v1/users', [UserController::class, 'get_users'])->name('api.users');
+Route::group(['prefix'=>'v1'],function () {
+    // users
+    Route::prefix('users')->group(function(){
+        Route::post('/', [UserController::class, 'get_users'])->name('api.v1.users');
+    });
+    // roles
+    Route::prefix('roles')->group(function(){
+        Route::post('/', [RoleController::class, 'get_roles'])->name('api.v1.roles');
+    });
+    // permission roles
+    Route::prefix('permission-roles')->group(function(){
+        Route::post('/', [PermissionRoleController::class, 'get_permission_roles'])->name('api.v1.permission-roles');
+    });
 });

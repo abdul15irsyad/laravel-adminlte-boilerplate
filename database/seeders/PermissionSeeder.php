@@ -33,7 +33,7 @@ class PermissionSeeder extends Seeder
                 "permission_slug" => Str::slug("User Delete"),
             ],
             [
-                "permission_title" => "Role Craete",
+                "permission_title" => "Role Create",
                 "permission_slug" => Str::slug("Role Create"),
             ],
             [
@@ -47,22 +47,6 @@ class PermissionSeeder extends Seeder
             [
                 "permission_title" => "Role Delete",
                 "permission_slug" => Str::slug("Role Delete"),
-            ],
-            [
-                "permission_title" => "Permission Create",
-                "permission_slug" => Str::slug("Permission Create"),
-            ],
-            [
-                "permission_title" => "Permission Read",
-                "permission_slug" => Str::slug("Permission Read"),
-            ],
-            [
-                "permission_title" => "Permission Update",
-                "permission_slug" => Str::slug("Permission Update"),
-            ],
-            [
-                "permission_title" => "Permission Delete",
-                "permission_slug" => Str::slug("Permission Delete"),
             ],
             [
                 "permission_title" => "Permission Role Create",

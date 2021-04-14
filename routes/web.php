@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PermissionRoleController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 // no middleware
@@ -38,6 +40,14 @@ Route::middleware(['auth'])->group(function () {
         // users
         Route::prefix('users')->group(function(){
             Route::get('/', [UserController::class, 'index'])->name('users');
+        });
+        // roles
+        Route::prefix('roles')->group(function(){
+            Route::get('/', [RoleController::class, 'index'])->name('roles');
+        });
+        // permission roles
+        Route::prefix('permission-roles')->group(function(){
+            Route::get('/', [PermissionRoleController::class, 'index'])->name('permission-roles');
         });
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     });

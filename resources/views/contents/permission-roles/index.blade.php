@@ -18,10 +18,8 @@
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>{{ __('dashboard.name') }}</th>
-                                <th>{{ __('dashboard.username') }}</th>
-                                <th>{{ __('dashboard.email') }}</th>
-                                <th>{{ __('dashboard.role') }}</th>
+                                <th>{{ __('dashboard.role-name') }}</th>
+                                <th>{{ __('dashboard.permission') }}</th>
                                 <th>{{ __('dashboard.action') }}</th>
                             </tr>
                         </thead>
@@ -45,7 +43,7 @@
     let table = $('.yajra-datatable').DataTable({
         ...defaultDatatables,
         ajax: {
-            url: "{{ route('api.v1.users') }}",
+            url: "{{ route('api.v1.permission-roles') }}",
             dataType: "json",
             type: "POST",
             data: {
@@ -54,10 +52,8 @@
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'user_name', name: 'user_name'},
-            {data: 'user_username', name: 'user_username'},
-            {data: 'user_email', name: 'user_email'},
             {data: 'role.role_name', name: 'role.role_name'},
+            {data: 'permission.permission_title', name: 'permission.permission_title'},
             {
                 data: 'action', 
                 name: 'action', 
