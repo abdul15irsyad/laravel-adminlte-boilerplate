@@ -17,7 +17,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::group(['prefix'=>'v1'],function () {
+Route::group(['prefix'=>'v1','middleware'=>'api'],function () {
     // users
     Route::prefix('users')->group(function(){
         Route::post('/', [UserController::class, 'get_users'])->name('api.v1.users');

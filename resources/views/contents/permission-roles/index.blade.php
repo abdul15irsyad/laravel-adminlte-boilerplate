@@ -14,6 +14,9 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
+                    <div class="text-right mb-3">
+                        <a href="#" class="btn btn-primary">{{ __('permission-roles.add-permission-role') }}</a>
+                    </div>
                     <table class="table table-bordered table-striped yajra-datatable">
                         <thead class="thead-dark">
                             <tr class="text-center">

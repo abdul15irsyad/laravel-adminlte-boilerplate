@@ -14,6 +14,9 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
+                    <div class="text-right mb-3">
+                        <a href="{{ route('users.add',['locale'=>config('app.locale')]) }}" class="btn btn-primary">{{ __('users.add-user') }}</a>
+                    </div>
                     <table class="table table-bordered table-striped yajra-datatable">
                         <thead class="thead-dark">
                             <tr class="text-center">
@@ -41,7 +44,7 @@
 @section('content-javascript')
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-print-1.6.5/fh-3.1.8/r-2.2.7/sp-1.2.2/datatables.min.js"></script>
 <script type="text/javascript">
-  $(function () {
+  $(document).ready( function () {
     let table = $('.yajra-datatable').DataTable({
         ...defaultDatatables,
         ajax: {
