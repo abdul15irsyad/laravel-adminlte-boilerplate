@@ -13,46 +13,46 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
-            <form action="{{ route('users.update',['locale'=>config('app.locale'),'id'=>$user->id]) }}" method="post" autocomplete="off">
+            <form action="{{ route('users.update',['id'=>$user->id]) }}" method="post" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="name">{{ __('users.name') }}</label>
+                            <label for="name">Name</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="{{ __('users.name-placeholder') }}" value="{{ old('name',$user->user_name) }}">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="eg: John Doe" value="{{ old('name',$user->user_name) }}">
                                 @error('name')
                                 <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="username" class="d-block mb-0">{{ __('users.username') }}</label>
-                            <span class="text-sm text-secondary">{{ __('users.username-desc') }}</span>
+                            <label for="username" class="d-block mb-0">Username</label>
+                            <span class="text-sm text-secondary">Minimum 3 characters and only lowercase letters (a-z), numbers (0-9), or underscore ("_")</span>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="{{ __('users.username-placeholder') }}" value="{{ old('username',$user->user_username) }}">
+                                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="eg: johndoe8" value="{{ old('username',$user->user_username) }}">
                                 @error('username')
                                 <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="email">{{ __('users.email') }}</label>
+                            <label for="email">Email</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('users.email-placeholder') }}" value="{{ old('email',$user->user_email) }}">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="eg: example@email.com" value="{{ old('email',$user->user_email) }}">
                                 @error('email')
                                 <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="d-block mb-0">{{ __('users.password') }}</label>
-                            <span class="text-sm text-secondary">{{ __('users.password-desc') }}</span>
+                            <label for="password" class="d-block mb-0">Password</label>
+                            <span class="text-sm text-secondary">Minimum 8 characters and must contain lowercase letters (a-z), uppercase (A-Z), and numbers (0-9)</span>
                             <div class="input-group input-password">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="********" value="{{ old('password') }}">
                                 <div class="input-group-append">
                                     <div class="input-group-text btn-show-password">
-                                        <span class="fas fa-eye" title="{{ __('auth.show') }}"></span>
+                                        <span class="fas fa-eye" title="Show"></span>
                                     </div>
                                 </div>
                             </div>
@@ -61,12 +61,12 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="confirm_password">{{ __('users.confirm-password') }}</label>
+                            <label for="confirm_password">Confirm Password</label>
                             <div class="input-group input-password">
-                                <input type="password" class="form-control @error('confirm_password') is-invalid @enderror" id="confirm_password" name="confirm_password" placeholder="{{ __('users.confirm-password-placeholder') }}">
+                                <input type="password" class="form-control @error('confirm_password') is-invalid @enderror" id="confirm_password" name="confirm_password" placeholder="retype your password">
                                 <div class="input-group-append">
                                     <div class="input-group-text btn-show-password">
-                                        <span class="fas fa-eye" title="{{ __('auth.show') }}"></span>
+                                        <span class="fas fa-eye" title="Show"></span>
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="role">{{ __('users.role') }}</label>
+                            <label for="role">Role</label>
                             <div class="input-group">
                                 <select class="form-control select2 @error('role') is-invalid @enderror" id="role" name="role">
                                     @foreach($roles as $role)
@@ -92,10 +92,10 @@
                     <div class="card-footer">
                         <div class="row justify-content-end">
                             <div class="col-md-auto col-5">
-                                <a href="{{ route('users',['locale'=>config('app.locale')]) }}" class="btn btn-default btn-block">{{ __('users.cancel') }}</a>
+                                <a href="{{ route('users') }}" class="btn btn-default btn-block">Cancel</a>
                             </div>
                             <div class="col-md-auto col-7">
-                                <input type="submit" class="btn btn-primary btn-block" value="{{ __('users.save-user') }}">
+                                <input type="submit" class="btn btn-primary btn-block" value="Save">
                             </div>
                         </div>
                     </div>

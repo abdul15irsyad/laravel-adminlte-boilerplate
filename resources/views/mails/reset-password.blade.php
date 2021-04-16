@@ -1,14 +1,14 @@
 @component('mail::message')
-# {{ __('auth.reset-password') }}
+# Reset Password
 
-{{ __('auth.hello-username',['username' => $user->user_username]) }}<br>
-{{ __('auth.text1-reset-password-mail',['app_name' => config('app.name')]) }}
+Hello, {{ $user->user_username }}<br>
+You recently asked to reset your password, click the button below to reset.
 
-@component('mail::button', ['url' => route('reset.password', ['locale'=> config('app.locale'),'username' => $user->user_username,'token' => $token->token])])
-{{ __('auth.reset-password') }}
+@component('mail::button', ['url' => route('reset.password', ['username' => $user->user_username,'token' => $token->token])])
+Reset Password
 @endcomponent
 
-{{ __('auth.text2-reset-password-mail',['expired_at' => date_format($token->expired_at,'H:i - F j, Y')]) }}<br><br>
-{{ __('auth.thanks') }},<br>
+This link only valid until {{ date_format($token->expired_at,'H:i - F j, Y') }}, if you do not request a password reset, please ignore this email.<br><br>
+Thanks,<br>
 {{ config('app.name') }}
 @endcomponent

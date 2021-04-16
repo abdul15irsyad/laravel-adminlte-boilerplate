@@ -30,7 +30,7 @@ class UserMail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from(env('MAIL_FROM_ADDRESS'),env('APP_NAME'))
+    return $this->from(config('mail.from.address'),config('mail.from.name'))
             ->subject($this->data['subject'])
             ->markdown($this->data['markdown'], $this->data);
     }

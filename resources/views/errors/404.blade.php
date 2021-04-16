@@ -11,7 +11,7 @@
         <h2 class="headline text-warning"><b>404</b></h2>
         <div class="error-content ml-5">
           <h3><i class="fas fa-exclamation-triangle text-warning"></i> Oops! Page not found.</h3>
-          <p>{!! __('auth.404-not-found',['link'=>route('home')]) !!}</p>
+          <p>We could not find the page you were looking for. Meanwhile, you may go <a href="{{ route('home') }}">home</a>.</p>
         </div>
         <!-- /.error-content -->
       </div>

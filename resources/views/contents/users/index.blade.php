@@ -16,17 +16,17 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-right mb-3">
-                        <a href="{{ route('users.create',['locale'=>config('app.locale')]) }}" class="btn btn-primary px-3">{{ __('users.create-user') }}</a>
+                        <a href="{{ route('users.create') }}" class="btn btn-primary px-3">Create User</a>
                     </div>
                     <table class="table table-bordered table-striped yajra-datatable">
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>{{ __('dashboard.name') }}</th>
-                                <th>{{ __('dashboard.username') }}</th>
-                                <th>{{ __('dashboard.email') }}</th>
-                                <th>{{ __('dashboard.role') }}</th>
-                                <th>{{ __('dashboard.action') }}</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,7 +54,6 @@
             type: "POST",
             data: {
                 username: <?= json_encode(auth('web')->user()->user_username) ?>,
-                locale: <?= json_encode(config('app.locale')) ?>,
             }
         },
         columns: [

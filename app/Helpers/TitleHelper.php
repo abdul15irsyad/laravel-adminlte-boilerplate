@@ -5,13 +5,13 @@ class TitleHelper {
     public static function all_title($title) {
         $titles = [
             'users' => [
-                __('users.users'),__('users.create-user'),__('users.update-user'),
+               'Users','Create User','Update User',
             ],
             'roles' => [
-                __('roles.roles'),__('roles.create-role'),
+                'Roles','Create Role','Update Role',
             ],
             'permission-roles' => [
-                __('permission-roles.permission-roles'),__('permission-roles.create-permission-role'),
+                'Permission Roles','Create Permission Role','Update Permission Role',
             ],
         ];
         $titles['user-management'] = [...$titles['users'],...$titles['roles'],...$titles['permission-roles']];

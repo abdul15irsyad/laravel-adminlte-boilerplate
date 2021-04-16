@@ -1,9 +1,9 @@
 @component('mail::message')
-# {{ __('auth.email-verification-success') }}
+# Email Verification Success
 
-{{ __('auth.hello-username',['username' => $user->user_username]) }}<br>
-{{ __('auth.your-email-has-been-verified') }}.
+Hello, {{ $user->user_username]) }}<br>
+Your email has been verified.
 
-{{ __('auth.thanks') }}
+Thanks,<br>
 {{ config('app.name') }}
 @endcomponent

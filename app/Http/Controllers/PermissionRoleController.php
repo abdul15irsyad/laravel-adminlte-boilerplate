@@ -29,10 +29,10 @@ class PermissionRoleController extends Controller
     public function index()
     {
         $data = [
-        'title' => __('permission-roles.permission-roles'),
+        'title' => 'Permission Role',
             'breadcumbs' => [
-                ['text' => __('dashboard.dashboard'), 'status' => null, 'link' => route('dashboard',['locale'=>config('app.locale')])],
-                ['text' => __('permission-roles.permission-roles'), 'status' => 'active', 'link' => '#'],
+                ['text' => 'Dashboard', 'status' => null, 'link' => route('dashboard',['locale'=>config('app.locale')])],
+                ['text' => 'Permission Role', 'status' => 'active', 'link' => '#'],
             ],
         ];
         return view('contents.permission-roles.index', $data);

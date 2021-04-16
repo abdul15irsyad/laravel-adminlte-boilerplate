@@ -97,18 +97,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Available Locale
-    |--------------------------------------------------------------------------
-    |
-    */
-
-    'available_locale' => [
-        ['locale' => 'en', 'text' => 'English'],
-        ['locale' => 'id', 'text' => 'Bahasa'],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Faker Locale
     |--------------------------------------------------------------------------
     |
@@ -234,7 +222,6 @@ return [
         'Request' => Illuminate\Support\Facades\Request::class,
         'Response' => Illuminate\Support\Facades\Response::class,
         'Route' => Illuminate\Support\Facades\Route::class,
-        'RouteHelper' => App\Helpers\RouteHelper::class,
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,

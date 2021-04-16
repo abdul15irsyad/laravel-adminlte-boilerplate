@@ -17,52 +17,52 @@ class PermissionSeeder extends Seeder
     {
         $rows = [
             [
-                "permission_title" => "User Create",
-                "permission_slug" => Str::slug("User Create"),
+                "permission_title" => "Create User",
+                "permission_slug" => Str::slug("Create User"),
             ],
             [
-                "permission_title" => "User Read",
-                "permission_slug" => Str::slug("User Read"),
+                "permission_title" => "Read User",
+                "permission_slug" => Str::slug("Read User"),
             ],
             [
-                "permission_title" => "User Update",
-                "permission_slug" => Str::slug("User Update"),
+                "permission_title" => "Update User",
+                "permission_slug" => Str::slug("Update User"),
             ],
             [
-                "permission_title" => "User Delete",
-                "permission_slug" => Str::slug("User Delete"),
+                "permission_title" => "Delete User",
+                "permission_slug" => Str::slug("Delete User"),
             ],
             [
-                "permission_title" => "Role Create",
-                "permission_slug" => Str::slug("Role Create"),
+                "permission_title" => "Create Role",
+                "permission_slug" => Str::slug("Create Role"),
             ],
             [
-                "permission_title" => "Role Read",
-                "permission_slug" => Str::slug("Role Read"),
+                "permission_title" => "Read Role",
+                "permission_slug" => Str::slug("Read Role"),
             ],
             [
-                "permission_title" => "Role Update",
-                "permission_slug" => Str::slug("Role Update"),
+                "permission_title" => "Update Role",
+                "permission_slug" => Str::slug("Update Role"),
             ],
             [
-                "permission_title" => "Role Delete",
-                "permission_slug" => Str::slug("Role Delete"),
+                "permission_title" => "Delete Role",
+                "permission_slug" => Str::slug("Delete Role"),
             ],
             [
-                "permission_title" => "Permission Role Create",
-                "permission_slug" => Str::slug("Permission Role Create"),
+                "permission_title" => "Create Permission Role",
+                "permission_slug" => Str::slug("Create Permission Role"),
             ],
             [
-                "permission_title" => "Permission Role Read",
-                "permission_slug" => Str::slug("Permission Role Read"),
+                "permission_title" => "Read Permission Role",
+                "permission_slug" => Str::slug("Read Permission Role"),
             ],
             [
-                "permission_title" => "Permission Role Update",
-                "permission_slug" => Str::slug("Permission Role Update"),
+                "permission_title" => "Update Permission Role",
+                "permission_slug" => Str::slug("Update Permission Role"),
             ],
             [
-                "permission_title" => "Permission Role Delete",
-                "permission_slug" => Str::slug("Permission Role Delete"),
+                "permission_title" => "Delete Permission Role",
+                "permission_slug" => Str::slug("Delete Permission Role"),
             ],
         ];
 

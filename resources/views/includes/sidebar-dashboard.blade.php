@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('dashboard',['locale' => config('app.locale')]) }}" class="brand-link">
+    <a href="{{ route('dashboard') }}" class="brand-link">
       <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
@@ -13,33 +13,33 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a href="{{ route('dashboard',['locale' => config('app.locale')]) }}" class="nav-link {{ $title==__('dashboard.dashboard') ? 'active' : '' }}">
+          <a href="{{ route('dashboard') }}" class="nav-link {{ $title=='Dashboard' ? 'active' : '' }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>{{ __('dashboard.dashboard') }}</p>
+            <p>Dashboard</p>
           </a>
         </li>
         <li class="nav-item {{ in_array($title,TitleHelper::all_title('user-management')) ? 'menu-is-opening menu-open' : '' }}">
           <a href="#" class="nav-link {{ in_array($title,TitleHelper::all_title('user-management')) ? 'active' : '' }}">
             <i class="nav-icon fas fa-users"></i>
-            <p>{{ __('dashboard.user-management') }}<i class="fas fa-angle-left right"></i></p>
+            <p>User Management<i class="fas fa-angle-left right"></i></p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('users',['locale' => config('app.locale')]) }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('users')]) ? 'active' : '' }}">
+              <a href="{{ route('users') }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('users')]) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user"></i>
-                <p>{{ __('dashboard.users') }}</p>
+                <p>Users</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('roles',['locale' => config('app.locale')]) }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('roles')]) ? 'active' : '' }}">
+              <a href="{{ route('roles') }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('roles')]) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-user-cog"></i>
-                <p>{{ __('dashboard.roles') }}</p>
+                <p>Roles</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('permission-roles',['locale' => config('app.locale')]) }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('permission-roles')]) ? 'active' : '' }}">
+              <a href="{{ route('permission-roles') }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('permission-roles')]) ? 'active' : '' }}">
                 <i class="nav-icon fas fa-key"></i>
-                <p>{{ __('dashboard.permission-roles') }}</p>
+                <p>Permission Roles</p>
               </a>
             </li>
           </ul>

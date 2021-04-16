@@ -10,12 +10,4 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function __construct()
-    {
-        $locale = request()->input('locale');
-        if($locale){
-            config(['app.locale'=>$locale]);
-        }
-    }
 }

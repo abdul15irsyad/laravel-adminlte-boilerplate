@@ -16,15 +16,15 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-right mb-3">
-                        <a href="#" class="btn btn-primary">{{ __('permission-roles.create-permission-role') }}</a>
+                        <a href="#" class="btn btn-primary">Permission Role</a>
                     </div>
                     <table class="table table-bordered table-striped yajra-datatable">
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>{{ __('dashboard.role-name') }}</th>
-                                <th>{{ __('dashboard.permission') }}</th>
-                                <th>{{ __('dashboard.action') }}</th>
+                                <th>Role Name</th>
+                                <th>Permission</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>

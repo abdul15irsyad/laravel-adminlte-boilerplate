@@ -39,9 +39,7 @@
                 [5, 10, 20, 50],
                 [5, 10, 20, 50]
             ],
-            language:<?= json_encode(__('dashboard.datatables-language')) ?>,
         };
-        let defaultLanguageDatepicker = <?= json_encode(__('dashboard.datepicker-language')) ?>;
         let defaultDatepicker = {
             autoclose: true,
             format: 'd MM yyyy',
@@ -49,33 +47,6 @@
             startDate: new Date(),
             todayHighlight: true,
             todayBtn: "linked",
-        }
-        let gateButton = (item, moduleGate) => {
-            let actionList = new DOMParser().parseFromString(item.action, "text/xml")
-            let btnShow = actionList.documentElement.querySelector('.btn-show')
-            if (btnShow) {
-                if (!moduleGate.show) {
-                    let parent = btnShow.parentElement
-                    parent.remove()
-                }
-            }
-            let btnEdit = actionList.documentElement.querySelector('.btn-edit')
-            if (btnEdit) {
-                if (!moduleGate.edit) {
-                    let parent = btnEdit.parentElement
-                    parent.remove()
-                }
-            }
-            let btnDeleteModal = actionList.documentElement.querySelector('.btn-delete-modal')
-            if (btnDeleteModal) {
-                if (!moduleGate.delete) {
-                    let parent = btnDeleteModal.parentElement
-                    parent.remove()
-                }
-            }
-            let temp = document.createElement('div')
-            temp.appendChild(actionList.documentElement)
-            item.action = temp.innerHTML
         }
     </script>
     @yield('content-javascript')

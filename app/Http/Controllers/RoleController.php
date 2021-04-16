@@ -29,10 +29,10 @@ class RoleController extends Controller
     public function index()
     {
         $data = [
-            'title' => __('roles.roles'),
+            'title' => 'Roles',
             'breadcumbs' => [
-                ['text' => __('dashboard.dashboard'), 'status' => null, 'link' => route('dashboard',['locale'=>config('app.locale')])],
-                ['text' => __('roles.roles'), 'status' => 'active', 'link' => '#'],
+                ['text' => 'Dashboard', 'status' => null, 'link' => route('dashboard',['locale'=>config('app.locale')])],
+                ['text' => 'Roles', 'status' => 'active', 'link' => '#'],
             ],
         ];
         return view('contents.roles.index', $data);

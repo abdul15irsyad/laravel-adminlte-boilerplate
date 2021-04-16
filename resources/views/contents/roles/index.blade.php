@@ -16,15 +16,15 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-right mb-3">
-                        <a href="#" class="btn btn-primary">{{ __('roles.create-role') }}</a>
+                        <a href="#" class="btn btn-primary">Create Role</a>
                     </div>
                     <table class="table table-bordered table-striped yajra-datatable">
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>{{ __('dashboard.role-name') }}</th>
-                                <th>{{ __('dashboard.description') }}</th>
-                                <th>{{ __('dashboard.action') }}</th>
+                                <th>Role Name</th>
+                                <th>Description</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
