@@ -8,7 +8,7 @@
 
 @section('body')
 
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
+<body class="hold-transition sidebar-mini layout-fixed layout-footer-fixed layout-navbar-fixed">
     <div class="wrapper">
         @include('includes.navbar-dashboard')
 

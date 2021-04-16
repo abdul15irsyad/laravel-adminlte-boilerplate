@@ -13,7 +13,9 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        require_once app_path() . '/Helpers/RouteHelper.php';
         require_once app_path() . '/Helpers/TokenHelper.php';
+        require_once app_path() . '/Helpers/TitleHelper.php';
     }
 
     /**

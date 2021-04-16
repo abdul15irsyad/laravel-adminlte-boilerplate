@@ -2,5 +2,5 @@
 
 return [
     'roles' => 'Roles',
-    'add-role' => 'Add Role',
+    'create-role' => 'Create Role',
 ];

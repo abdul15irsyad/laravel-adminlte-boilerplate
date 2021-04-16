@@ -2,5 +2,5 @@
 
 return [
     'roles' => 'Peran',
-    'add-role' => 'Tambah Peran',
+    'create-role' => 'Tambah Peran',
 ];

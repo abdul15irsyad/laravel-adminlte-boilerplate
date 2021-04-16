@@ -18,23 +18,31 @@
             <p>{{ __('dashboard.dashboard') }}</p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="{{ route('users',['locale' => config('app.locale')]) }}" class="nav-link {{ $title==__('dashboard.users') ? 'active' : '' }}">
+        <li class="nav-item {{ in_array($title,TitleHelper::all_title('user-management')) ? 'menu-is-opening menu-open' : '' }}">
+          <a href="#" class="nav-link {{ in_array($title,TitleHelper::all_title('user-management')) ? 'active' : '' }}">
             <i class="nav-icon fas fa-users"></i>
-            <p>{{ __('dashboard.users') }}</p>
+            <p>{{ __('dashboard.user-management') }}<i class="fas fa-angle-left right"></i></p>
           </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('roles',['locale' => config('app.locale')]) }}" class="nav-link {{ $title==__('dashboard.roles') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-users-cog"></i>
-            <p>{{ __('dashboard.roles') }}</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('permission-roles',['locale' => config('app.locale')]) }}" class="nav-link {{ $title==__('dashboard.permission-roles') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-users-cog"></i>
-            <p>{{ __('dashboard.permission-roles') }}</p>
-          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('users',['locale' => config('app.locale')]) }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('users')]) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user"></i>
+                <p>{{ __('dashboard.users') }}</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('roles',['locale' => config('app.locale')]) }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('roles')]) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-user-cog"></i>
+                <p>{{ __('dashboard.roles') }}</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('permission-roles',['locale' => config('app.locale')]) }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('permission-roles')]) ? 'active' : '' }}">
+                <i class="nav-icon fas fa-key"></i>
+                <p>{{ __('dashboard.permission-roles') }}</p>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>

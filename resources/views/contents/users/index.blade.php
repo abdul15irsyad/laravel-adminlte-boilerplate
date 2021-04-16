@@ -12,10 +12,11 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
+            @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
             <div class="card">
                 <div class="card-body">
                     <div class="text-right mb-3">
-                        <a href="{{ route('users.add',['locale'=>config('app.locale')]) }}" class="btn btn-primary">{{ __('users.add-user') }}</a>
+                        <a href="{{ route('users.create',['locale'=>config('app.locale')]) }}" class="btn btn-primary px-3">{{ __('users.create-user') }}</a>
                     </div>
                     <table class="table table-bordered table-striped yajra-datatable">
                         <thead class="thead-dark">
@@ -53,6 +54,7 @@
             type: "POST",
             data: {
                 username: <?= json_encode(auth('web')->user()->user_username) ?>,
+                locale: <?= json_encode(config('app.locale')) ?>,
             }
         },
         columns: [

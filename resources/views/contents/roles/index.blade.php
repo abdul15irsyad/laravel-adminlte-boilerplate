@@ -12,10 +12,11 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
+            @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
             <div class="card">
                 <div class="card-body">
                     <div class="text-right mb-3">
-                        <a href="#" class="btn btn-primary">{{ __('roles.add-role') }}</a>
+                        <a href="#" class="btn btn-primary">{{ __('roles.create-role') }}</a>
                     </div>
                     <table class="table table-bordered table-striped yajra-datatable">
                         <thead class="thead-dark">

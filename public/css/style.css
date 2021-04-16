@@ -1,10 +1,21 @@
 /* Root */
 :root{
   --primary: #0074bc !important;
+  --table-radius: 5px;
 }
 
 .border-none{
   border: none !important;
+}
+
+/* Wrapper */
+.layout-footer-fixed .wrapper .content-wrapper{
+  padding-bottom: calc(4rem + 1px);
+}
+
+/* Navbar */
+.navbar{
+  box-shadow: 0px 3px 10px rgb(0 0 0 / .1);
 }
 
 /* Datepicker */
@@ -19,16 +30,32 @@ a.inherit{
 }
 
 /* Table */
-table.table,table.table .dtr-details{
+.table,table.table .dtr-details{
   width: 100% !important;
 }
 
-table.table-datatable thead th:last-child{
-  min-width: 148px !important;
+.table :is(td,th){
+  vertical-align: middle !important;
 }
 
-table.table :is(td,th){
-  vertical-align: middle !important;
+.table{
+  border-radius: var(--table-radius) !important;
+}
+
+.table th:first-child{
+  border-top-left-radius: var(--table-radius) !important;
+}
+
+.table th:last-child{
+  border-top-right-radius: var(--table-radius) !important;
+}
+
+.table tr:last-child td:first-child{
+  border-bottom-left-radius: var(--table-radius) !important;
+}
+
+.table tr:last-child td:last-child{
+  border-bottom-right-radius: var(--table-radius) !important;
 }
 
 /* Hover */

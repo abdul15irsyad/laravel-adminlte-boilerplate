@@ -125,6 +125,12 @@ return [
         'new_password' => [
             'regex' => ':attribute harus mengandung huruf kecil (a-z), huruf besar (A-Z), dan angka (0-9)',
         ],
+        'username' => [
+            'regex' => 'username hanya huruf kecil (a-z), angka (0-9), atau garis bawah "_"',
+        ],
+        'password' => [
+            'regex' => 'kata sandi harus mengandung huruf kecil (a-z), huruf besar (A-Z), dan angka (0-9)',
+        ],
     ],
 
     /*
@@ -139,6 +145,10 @@ return [
     */
 
     'attributes' => [
+        'name' => 'nama',
+        'username' => 'username',
+        'email' => 'email',
+        'password' => 'kata sandi',
         'new_password' => 'kata sandi baru',
         'confirm_password' => 'konfirmasi kata sandi',
     ],

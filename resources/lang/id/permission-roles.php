@@ -2,5 +2,5 @@
 
 return [
     'permission-roles' => 'Akses Peran',
-    'add-permission-role' => 'Tambah Akses Peran',
+    'create-permission-role' => 'Tambah Akses Peran',
 ];

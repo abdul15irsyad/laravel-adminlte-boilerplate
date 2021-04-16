@@ -10,6 +10,7 @@ return [
     'logout-confirmation-text' => 'Keluar dari akun <b>:username</b> ?',
     'cancel' => 'Batal',
     'yes-logout' => 'Ya, Keluar',
+    'user-management' => 'Manajemen Pengguna',
     'users' => 'Pengguna',
     'roles' => 'Peran',
     'permission' => 'Akses',

@@ -10,6 +10,7 @@ return [
     'logout-confirmation-text' => 'Logout from <b>:username</b> account ?',
     'cancel' => 'Cancel',
     'yes-logout' => 'Yes, Logout',
+    'user-management' => 'User Management',
     'users' => 'Users',
     'roles' => 'Roles',
     'permission' => 'Permission',

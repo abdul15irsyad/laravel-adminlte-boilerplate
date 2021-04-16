@@ -13,14 +13,14 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
-            <form action="{{ route('users.create',['locale'=>config('app.locale')]) }}" method="post" autocomplete="off">
+            <form action="{{ route('users.update',['locale'=>config('app.locale'),'id'=>$user->id]) }}" method="post" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">{{ __('users.name') }}</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="{{ __('users.name-placeholder') }}" value="{{ old('name') }}">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="{{ __('users.name-placeholder') }}" value="{{ old('name',$user->user_name) }}">
                                 @error('name')
                                 <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
@@ -30,7 +30,7 @@
                             <label for="username" class="d-block mb-0">{{ __('users.username') }}</label>
                             <span class="text-sm text-secondary">{{ __('users.username-desc') }}</span>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="{{ __('users.username-placeholder') }}" value="{{ old('username') }}">
+                                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="{{ __('users.username-placeholder') }}" value="{{ old('username',$user->user_username) }}">
                                 @error('username')
                                 <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
@@ -39,7 +39,7 @@
                         <div class="form-group">
                             <label for="email">{{ __('users.email') }}</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('users.email-placeholder') }}" value="{{ old('email') }}">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="{{ __('users.email-placeholder') }}" value="{{ old('email',$user->user_email) }}">
                                 @error('email')
                                 <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
@@ -79,7 +79,7 @@
                             <div class="input-group">
                                 <select class="form-control select2 @error('role') is-invalid @enderror" id="role" name="role">
                                     @foreach($roles as $role)
-                                    <option value="{{ $role->role_slug }}" <?= old('role')==$role->role_slug ? 'selected' : '' ?>>{{ $role->role_name }}</option>
+                                    <option value="{{ $role->role_slug }}" <?= old('role',$user->role->role_slug)==$role->role_slug ? 'selected' : '' ?>>{{ $role->role_name }}</option>
                                     @endforeach
                                 </select>
                                 @error('role')
@@ -95,7 +95,7 @@
                                 <a href="{{ route('users',['locale'=>config('app.locale')]) }}" class="btn btn-default btn-block">{{ __('users.cancel') }}</a>
                             </div>
                             <div class="col-md-auto col-7">
-                                <input type="submit" class="btn btn-primary btn-block" value="{{ __('users.create-user') }}">
+                                <input type="submit" class="btn btn-primary btn-block" value="{{ __('users.save-user') }}">
                             </div>
                         </div>
                     </div>

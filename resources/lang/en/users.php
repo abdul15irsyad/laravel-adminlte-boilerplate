@@ -2,7 +2,7 @@
 
 return [
     'users' => 'Users',
-    'add-user' => 'Add User',
+    'create-user' => 'Create User',
     'name' => 'Name',
     'name-placeholder' => 'eg: John Doe',
     'username' => 'Username',
@@ -14,5 +14,9 @@ return [
     'password-desc' => 'Minimum 8 characters and must contain lowercase letters (a-z), uppercase (A-Z), and numbers (0-9)',
     'confirm-password' => 'Confirm Password',
     'confirm-password-placeholder' => 'retype your password',
+    'role' => 'Role',
     'cancel' => 'Cancel',
+    'create-user-success' => 'Create user successfull',
+    'update-user' => 'Update User',
+    'save-user' => 'Save User',
 ];

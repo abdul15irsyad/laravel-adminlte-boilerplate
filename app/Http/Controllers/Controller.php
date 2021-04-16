@@ -13,7 +13,9 @@ class Controller extends BaseController
 
     public function __construct()
     {
-        $locale = request()->route('locale');
-        config(['app.locale'=>$locale]);
+        $locale = request()->input('locale');
+        if($locale){
+            config(['app.locale'=>$locale]);
+        }
     }
 }

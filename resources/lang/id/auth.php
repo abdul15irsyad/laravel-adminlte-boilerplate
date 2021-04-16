@@ -4,6 +4,7 @@ return [
     'failed' => 'Kredensial ini tidak cocok dengan catatan kami.',
     'password' => 'Kata sandi yang disediakan salah.',
     'throttle' => 'Terlalu banyak upaya login.Silakan coba lagi dalam: detik detik.',
+    '404-not-found' => 'Kami tidak dapat menemukan halaman yang anda cari. Sementara itu, anda dapat menuju <a href=":link">beranda</a>.',
 
     // login
     'login' => 'Masuk',

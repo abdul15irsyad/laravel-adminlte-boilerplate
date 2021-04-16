@@ -11,12 +11,7 @@
                 <h4 class="mb-0">{{__('auth.login')}}</h4>
             </div>
             <div class="card-body">
-                @if(session('message'))
-                <div class="alert alert-default-{{ session('type') }} alert-dismissible text-sm">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    {{ session('message') }}
-                </div>
-                @endif
+                @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
                 <form action="{{ route('login',['locale'=>config('app.locale')]) }}" method="post" autocomplete="off">
                     @csrf
                     <div class="input-group mb-3">

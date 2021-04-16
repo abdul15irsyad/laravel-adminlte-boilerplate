@@ -11,12 +11,7 @@
         <h4 class="mb-0">{{__('auth.forgot-password')}}</h4>
       </div>
       <div class="card-body">
-        @if(session('message'))
-        <div class="alert alert-default-{{ session('type') }} alert-dismissible text-sm">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-          {{ session('message') }}
-        </div>
-        @endif
+        @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
         <p class="text-center text-sm">{{__('auth.forgot-password-desc')}}</p>
         <form action="{{ route('forgot.password.process',['locale'=>config('app.locale')]) }}" method="post" autocomplete="off">
           @csrf

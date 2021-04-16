@@ -2,5 +2,5 @@
 
 return [
     'permission-roles' => 'Permission Roles',
-    'add-permission-role' => 'Add Permission Role',
+    'create-permission-role' => 'Create Permission Role',
 ];

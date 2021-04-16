@@ -4,7 +4,7 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    
+    '404-not-found' => 'We could not find the page you were looking for. Meanwhile, you may go <a href=":link">home</a>.',
     // login
     'login' => 'Login',
     'username-or-email' => 'username or email',

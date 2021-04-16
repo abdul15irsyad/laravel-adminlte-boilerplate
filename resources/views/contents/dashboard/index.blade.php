@@ -8,6 +8,7 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
+            @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
             <!-- Info boxes -->
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
