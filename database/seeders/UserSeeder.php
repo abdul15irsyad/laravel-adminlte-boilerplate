@@ -46,28 +46,23 @@ class UserSeeder extends Seeder
                 // send activation token to user email
                 $user = User::where('user_username',$row['user_username'])->first();
                 // generate token
-                $token = TokenHelper::generate_token('email_verification');
-                $this->send_email_verification_link($user,$token);
+                $new_token = TokenHelper::generate_token('email_verification');
+                // add token to database
+                $expired_at = Carbon::now()->addMinutes(60);
+                $token = new Token;
+                $token->token = $new_token;
+                $token->token_type = 'email_verification';
+                $token->user_id = $user->id;
+                $token->expired_at = $expired_at;
+                $token->save();
+                $data = [
+                    'subject' => 'Email Verification',
+                    'user' => $user,
+                    'token' => $token,
+                    'markdown' => 'mails.verify-email',
+                ];
+                Mail::to($user->user_email)->send(new UserMail($data));
             }
 		}
-    }
-
-    public function send_email_verification_link($user,$new_token)
-    {
-        // add token to database
-        $expired_at = Carbon::now()->addMinutes(60);
-        $token = new Token;
-        $token->token = $new_token;
-        $token->token_type = 'email_verification';
-        $token->user_id = $user->id;
-        $token->expired_at = $expired_at;
-        $token->save();
-        $data = [
-            'subject' => 'Email Verification',
-            'user' => $user,
-            'token' => $token,
-            'markdown' => 'mails.verify-email',
-        ];
-        Mail::to($user->user_email)->send(new UserMail($data));
     }
 }

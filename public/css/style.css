@@ -1,7 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 /* Root */
 :root{
   --primary: #0074bc !important;
   --table-radius: 5px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(0,0,0,.1);
+  border-radius: 20px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,.3); 
+  border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0,0,0,.4); 
+}
+
+a[title]:after {
+  border-radius: 3px !important;
+}
+
+body{
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+
+.source-sans-pro{
+  font-family: 'source sans pro',sans-serif !important;
+}
+
+button:focus{
+  outline: none !important;
 }
 
 .border-none{
@@ -33,29 +66,35 @@ a.inherit{
 .table,table.table .dtr-details{
   width: 100% !important;
 }
-
-.table :is(td,th){
+.table td{
   vertical-align: middle !important;
+  text-align: center;
 }
-
-.table{
-  border-radius: var(--table-radius) !important;
-}
-
-.table th:first-child{
-  border-top-left-radius: var(--table-radius) !important;
-}
-
-.table th:last-child{
-  border-top-right-radius: var(--table-radius) !important;
-}
-
-.table tr:last-child td:first-child{
-  border-bottom-left-radius: var(--table-radius) !important;
-}
-
-.table tr:last-child td:last-child{
-  border-bottom-right-radius: var(--table-radius) !important;
+@media only screen and (min-width:768px){
+  .table tr td:first-child{
+    border-left: 1px solid #e2e2e2 !important;
+  }
+  .table tr td:last-child{
+    border-right: 1px solid #e2e2e2 !important;
+  }
+  .table tr:last-child td{
+    border-bottom: 1px solid #e2e2e2 !important;
+  }
+  .table{
+    border-radius: var(--table-radius) !important;
+  }
+  .table th:first-child{
+    border-top-left-radius: var(--table-radius) !important;
+  }
+  .table th:last-child{
+    border-top-right-radius: var(--table-radius) !important;
+  }
+  .table tr:last-child td:first-child{
+    border-bottom-left-radius: var(--table-radius) !important;
+  }
+  .table tr:last-child td:last-child{
+    border-bottom-right-radius: var(--table-radius) !important;
+  }
 }
 
 /* Hover */

@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav class="main-header navbar navbar-expand navbar-white navbar-light pr-3">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -8,7 +8,7 @@
     </ul>
 
     <!-- SEARCH FORM -->
-    <form class="form-inline ml-3">
+    {{-- <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
@@ -17,27 +17,32 @@
           </button>
         </div>
       </div>
-    </form>
+    </form> --}}
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Notifications Dropdown Menu -->
-        <li class="nav-item mr-3">
+        <li class="nav-item">
             <a class="nav-link" href="#" title="Notification">
-                <i class="far fa-bell"></i>
+                <i class="fas fa-bell"></i>
                 @if(auth('web')->user()->unreadNotifications->count()>0)
                 <span class="badge badge-danger navbar-badge">{{ auth('web')->user()->unreadNotifications->count() }}</span>
                 @endif
             </a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item">
+            <a class="nav-link" href="#" title="Settings">
+                <i class="fas fa-cog"></i>
+            </a>
+        </li>
+        <li class="nav-item dropdown ml-3">
             <a href="#" class="btn btn-default" data-toggle="dropdown">
                 <span>{{ auth()->user()->user_username }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                 <a href="#" class="dropdown-item"><i class="fas fa-user fa-fw mr-2"></i> Profile</a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item hover-danger" data-toggle="modal" data-target="#modal-logout"><i class="fas fa-sign-out-alt fa-fw mr-2"></i> Logout</a>
+                <a href="#" class="dropdown-item hover-danger" data-toggle="modal" data-target="#modal-logout"><i class="fas fa-power-off fa-fw mr-2"></i> Logout</a>
             </div>
         </li>
     </ul>

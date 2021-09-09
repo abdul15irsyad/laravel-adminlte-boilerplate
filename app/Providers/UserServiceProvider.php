@@ -15,6 +15,8 @@ class UserServiceProvider extends ServiceProvider
     {
         require_once app_path() . '/Helpers/TokenHelper.php';
         require_once app_path() . '/Helpers/TitleHelper.php';
+        require_once app_path() . '/Helpers/ButtonHelper.php';
+        require_once app_path() . '/Helpers/MailHelper.php';
     }
 
     /**

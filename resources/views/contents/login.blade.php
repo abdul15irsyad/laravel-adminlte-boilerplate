@@ -36,7 +36,7 @@
             </div>
             <div class="card-footer">
                 <p class="text-center mb-1">
-                    <a href="{{ route('forgot.password') }}">Forgot Password</a>
+                    <a href="{{ route('forgot.password') }}">Forgot Password?</a>
                 </p>
             </div>
             <!-- /.card-body -->

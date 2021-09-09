@@ -31,6 +31,7 @@
     <script src="{{ asset('adminlte/dist/js/pages/dashboard2.js') }}"></script>
     <script type="text/javascript">
         let defaultDatatables = {
+            order: [1,'asc'],
             processing: true,
             serverSide: true,
             responsive: true,
@@ -39,11 +40,14 @@
                 [5, 10, 20, 50],
                 [5, 10, 20, 50]
             ],
+            language: {
+                searchPlaceholder: "search here..."
+            }
         };
         let defaultDatepicker = {
             autoclose: true,
             format: 'd MM yyyy',
-            language: "in",
+            language: "en",
             startDate: new Date(),
             todayHighlight: true,
             todayBtn: "linked",

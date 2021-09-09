@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Role;
-use DataTables, TitleHelper, Hash, Route;
+use App\Models\Token;
+use Carbon, DataTables, TitleHelper, ButtonHelper, TokenHelper, MailHelper, Hash, Route;
 use Illuminate\Http\Request;
+use App\Mail\UserMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -17,8 +20,17 @@ class UserController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $btn = '<div class="text-center">';
-                    $btn .= '<a href="'.route('users.update',['id' => $row->id]).'" class="btn btn-primary btn-sm mx-1"><i class="fas fa-fw fa-pencil-alt"></i></a>';
-                    $btn .= '<a href="'.route('users.delete',['id' => $row->id]).'" class="btn btn-danger btn-sm mx-1"><i class="fas fa-fw fa-trash-alt"></i></a>';
+                    $btn .= ButtonHelper::datatable_button('edit',[
+                        'href' => route('users.update',['id' => $row->id]),
+                        'title' => 'edit',
+                        'icon' => 'far fa-edit',
+                    ]);
+                    $btn .= ButtonHelper::datatable_button('delete',[
+                        'href' => route('users.delete',['id' => $row->id]),
+                        'nickname' => $row->user_username,
+                        'title' => 'delete',
+                        'icon' => 'far fa-trash-alt',
+                    ]);
                     $btn .= '</div>';
                     return $btn;
                 })
@@ -73,6 +85,13 @@ class UserController extends Controller
         $role = Role::where('role_slug',$request->input('role'))->first();
         $user->role_id = $role->id;
         $user->save();
+        
+        // create new token and then send to email
+        $data = [
+            'subject' => 'Email Verification',
+            'markdown' => 'mails.verify-email',
+        ];
+        MailHelper::send_token_to_user($user,'email_verification',$data);
 
         return redirect()
             ->route('users')
@@ -98,18 +117,63 @@ class UserController extends Controller
         return view('contents.users.update', $data);
     }
 
-    public function update_process(Request $request)
+    public function save(Request $request)
     {
         $id = $request->route('id');
         $this->validate($request, [
             'name' => 'required|min:3',
             'username' => 'required|min:3|regex:/^[a-z0-9\_]+$/|unique:users,user_username,' . $id . ',id',
             'email' => 'required|email|unique:users,user_email,' . $id . ',id',
-            'password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])./',
-            'confirm_password' => 'same:password',
+            'password' => 'nullable|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])./',
+            'confirm_password' => $request->input('password') ? 'same:password' : 'nullable',
             'role' => 'required|exists:roles,role_slug',
         ]);
 
+        $user = User::find($id);
+        $user->user_name = $request->input('name');
+        $user->user_username = $request->input('username');
+        if($user->user_email != $request->input('email')){
+            $user->user_email = $request->input('email');
+            // create new token and then send to email
+            $data = [
+                'subject' => 'Email Verification',
+                'markdown' => 'mails.verify-email',
+            ];
+            MailHelper::send_token_to_user($user,'email_verification',$data);
+        }
+        if($request->input('password')){
+            $user->user_password  = Hash::make($request->input('password'));
+        }
+        $role = Role::where('role_slug',$request->input('role'))->first();
+        $user->role_id = $role->id;
+        $user->save();
+
+        return redirect()
+            ->route('users')
+            ->with('type', 'success')
+            ->with('message', 'Update user successfull');        
+    }
+
+    public function delete(Request $request)
+    {
+        $id = $request->route('id');
+        $user = User::where('id',$id)->firstOrFail();
         
+        $super_admins = User::whereHas('role',function($query){
+            $query->where('role_slug','super-admin');
+        })->get();
+        if($user->role->role_slug == 'super-admin' && $super_admins->count() <= 1){
+            return redirect()
+            ->route('users')
+            ->with('type', 'danger')
+            ->with('message', 'Delete user failed, must be at least 1 super admin');
+        }
+
+        $user->delete();
+        
+        return redirect()
+            ->route('users')
+            ->with('type', 'success')
+            ->with('message', 'Delete user successfull');
     }
 }

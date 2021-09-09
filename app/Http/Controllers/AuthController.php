@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use TokenHelper;
+use TokenHelper, MailHelper;
 
 class AuthController extends Controller
 {
@@ -26,20 +26,36 @@ class AuthController extends Controller
 
     public function login_process(Request $request)
     {
-        $field = filter_var($request->input('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $field = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $data = [
-            'user_' . $field => $request->input('username'),
-            'password'  => $request->input('password'),
+            'user_' . $field => $username,
+            'password'  => $password,
         ];
 
-        if (!auth('web')->attempt($data)) {
-            return redirect()
-                ->route('login')
-                ->withInput()
-                ->with('type', 'warning')
-                ->with('message', 'Username or password is incorrect');
+        // if username or password incorrect
+        $user = User::where('user_'.$field,$username)->first();
+        if($user){
+            $auth = Hash::check($password, $user->user_password);
+            if($auth){
+                // if($user->email_verified_at==null){
+                //     return redirect()
+                //         ->route('login')
+                //         ->withInput()
+                //         ->with('type', 'warning')
+                //         ->with('message', 'Verify your email first');
+                // }
+                auth('web')->attempt($data);
+                return redirect()->route('dashboard');
+            }
         }
-        return redirect()->route('dashboard');
+        
+        return redirect()
+            ->route('login')
+            ->withInput()
+            ->with('type', 'warning')
+            ->with('message', 'Username or password is incorrect');
     }
 
     public function verify_email_process(Request $request)
@@ -47,9 +63,9 @@ class AuthController extends Controller
         $username = $request->input('username');
         $token = $request->input('token');
 
-        $user = User::where('user_username',$username)->first();
+        $user = User::where('user_username', $username)->first();
         // if user not found
-        if(!$user){
+        if (!$user) {
             return redirect()
                 ->route('forgot.password')
                 ->with('type', 'warning')
@@ -58,12 +74,12 @@ class AuthController extends Controller
 
         $token = Token::where('token', $token)
             ->where('token_status', 'Y')
-            ->where('used_at',null)
+            ->where('used_at', null)
             ->where('token_type', 'email_verification')
             ->first();
-        
+
         // if token invalid
-        if(!$token){
+        if (!$token) {
             return redirect()
                 ->route('forgot.password')
                 ->with('type', 'warning')
@@ -71,7 +87,7 @@ class AuthController extends Controller
         }
 
         // if token expired
-        if(Carbon::now()->gt($token->expired_at)){
+        if (Carbon::now()->gt($token->expired_at)) {
             $token->token_status = 'N';
             $token->save();
             return redirect()
@@ -85,23 +101,23 @@ class AuthController extends Controller
         $token->used_at = Carbon::now();
         $token->save();
 
-        // update user password
+        // assign email verified date
         $user->email_verified_at = Carbon::now();
         $user->save();
 
-        // notify user
-        $data = [
-            'database' => [
-                'title' => 'Email Verification Success',
-                'desc' => 'Your email has been verified'
-            ],
-            'mail' => [
-                'subject' => 'Email Verification Success',
-                'markdown' => 'mails.verify-email-success',
-                'user' => $user,
-            ]
-        ];
-        $user->notify(new UserNotification($data));
+        // // notify user
+        // $data = [
+        //     'database' => [
+        //         'title' => 'Email Verification Success',
+        //         'desc' => 'Your email has been verified'
+        //     ],
+        //     'mail' => [
+        //         'subject' => 'Email Verification Success',
+        //         'markdown' => 'mails.verify-email-success',
+        //         'user' => $user,
+        //     ]
+        // ];
+        // $user->notify(new UserNotification($data));
 
         return redirect()
             ->route('login')
@@ -126,9 +142,9 @@ class AuthController extends Controller
         $email = $request->input('email');
 
         $user = User::where('user_email', $email)->first();
-        
+
         // if no user with email
-        if(!$user){
+        if (!$user) {
             return redirect()
                 ->route('forgot.password')
                 ->withInput()
@@ -137,42 +153,21 @@ class AuthController extends Controller
         }
 
         // if user's email not verified
-        if(!$user->email_verified_at){
+        if (!$user->email_verified_at) {
             return redirect()
                 ->route('forgot.password')
                 ->withInput()
                 ->with('type', 'warning')
-                ->with('message', 'Verify your email first in your email');
+                ->with('message', 'Verify your email first');
         }
-        
-        // generate token
-        $new_token = TokenHelper::generate_token('forgot_password');
-        
-        // if user have previous token
-        $previous_token = Token::where('token_type', 'forgot_password')->where('token_status', 'Y')->where('used_at',null)->where('user_id', $user['id'])->first();
-        if ($previous_token) {
-            $previous_token->token_status = 'N';
-            $previous_token->save();
-        }
-        
-        // add token to database
-        $expired_at = Carbon::now()->addMinutes(60);
-        $token = new Token;
-        $token->token = $new_token;
-        $token->token_type = 'forgot_password';
-        $token->user_id = $user->id;
-        $token->expired_at = $expired_at;
-        $token->save();
-        
-        // send token to user email
+
+        // create new token and then send to email
         $data = [
             'subject' => 'Reset Password',
-            'user' => $user,
-            'token' => $token,
             'markdown' => 'mails.reset-password',
         ];
-        Mail::to($user->user_email)->send(new UserMail($data));
-        
+        MailHelper::send_token_to_user($user,'forgot_password',$data);
+
         return redirect()
             ->route('forgot.password')
             ->withInput()
@@ -184,10 +179,10 @@ class AuthController extends Controller
     {
         $token = $request->input('token');
         $username = $request->input('username');
-        
-        $user = User::where('user_username',$username)->first();
+
+        $user = User::where('user_username', $username)->first();
         // if user not found
-        if(!$user){
+        if (!$user) {
             return redirect()
                 ->route('forgot.password')
                 ->with('type', 'warning')
@@ -196,12 +191,12 @@ class AuthController extends Controller
 
         $token = Token::where('token', $token)
             ->where('token_status', 'Y')
-            ->where('used_at',null)
+            ->where('used_at', null)
             ->where('token_type', 'forgot_password')
             ->first();
-        
+
         // if token invalid
-        if(!$token){
+        if (!$token) {
             return redirect()
                 ->route('forgot.password')
                 ->with('type', 'warning')
@@ -209,7 +204,7 @@ class AuthController extends Controller
         }
 
         // if token expired
-        if(Carbon::now()->gt($token->expired_at)){
+        if (Carbon::now()->gt($token->expired_at)) {
             $token->token_status = 'N';
             $token->save();
             return redirect()
@@ -235,14 +230,14 @@ class AuthController extends Controller
 
         $token = $request->input('token');
         $password = $request->input('new_password');
-        
+
         $token = Token::where('token', $token)
             ->where('token_status', 'Y')
-            ->where('used_at',null)
+            ->where('used_at', null)
             ->where('token_type', 'forgot_password')
             ->first();
         // if token invalid
-        if(!$token){
+        if (!$token) {
             return redirect()
                 ->route('forgot.password')
                 ->with('type', 'warning')
@@ -250,7 +245,7 @@ class AuthController extends Controller
         }
 
         // if token expired
-        if(Carbon::now()->gt($token->expired_at)){
+        if (Carbon::now()->gt($token->expired_at)) {
             $token->token_status = 'N';
             $token->save();
             return redirect()
@@ -265,9 +260,10 @@ class AuthController extends Controller
         $token->save();
 
         // update user password
+        $user = User::where('user_username', $token->user->user_username)->first();
         $user->user_password = Hash::make($password);
         $user->save();
-        
+
         // notify user
         $data = [
             'database' => [

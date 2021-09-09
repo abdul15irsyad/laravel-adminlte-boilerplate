@@ -3,12 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Token extends Model
 {
-    use SoftDeletes;
-
     protected $fillable = [
         'token',
         'token_type',
@@ -27,6 +24,6 @@ class Token extends Model
 
     public function user()
     {
-        return $this->belongsTo(Role::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

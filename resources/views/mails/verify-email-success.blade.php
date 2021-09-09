@@ -1,7 +1,7 @@
 @component('mail::message')
 # Email Verification Success
 
-Hello, {{ $user->user_username]) }}<br>
+Hello, {{ $user->user_username }}<br>
 Your email has been verified.
 
 Thanks,<br>

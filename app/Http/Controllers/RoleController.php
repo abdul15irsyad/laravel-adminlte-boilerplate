@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
-use DataTables;
+use DataTables, ButtonHelper;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -16,8 +16,17 @@ class RoleController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $btn = '<div class="text-center">';
-                    $btn .= '<a href="#" class="btn btn-primary btn-sm mx-1"><i class="fas fa-fw fa-pencil-alt"></i></a>';
-                    $btn .= '<a href="#" class="btn btn-danger btn-sm mx-1"><i class="fas fa-fw fa-trash-alt"></i></a>';
+                    $btn .= ButtonHelper::datatable_button('edit',[
+                        'href' => '#',
+                        'title' => 'edit',
+                        'icon' => 'far fa-edit',
+                    ]);
+                    $btn .= ButtonHelper::datatable_button('delete',[
+                        'href' => '#',
+                        'nickname' => $row->role_name,
+                        'title' => 'delete',
+                        'icon' => 'far fa-trash-alt',
+                    ]);
                     $btn .= '</div>';
                     return $btn;
                 })

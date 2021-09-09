@@ -34,8 +34,8 @@
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
-        <p class="text-center mb-1">
-          <a href="{{ route('login') }}">Login</a>
+        <p class="mb-1">
+          <a href="{{ route('login') }}" class="btn btn-default"><i class="fas fa-fw fa-arrow-left mr-1"></i> Back to Login</a>
         </p>
       </div>
       <!-- /.card-footer -->

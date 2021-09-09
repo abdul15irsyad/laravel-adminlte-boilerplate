@@ -95,7 +95,7 @@
                                 <a href="{{ route('users') }}" class="btn btn-default btn-block">Cancel</a>
                             </div>
                             <div class="col-md-auto col-7">
-                                <input type="submit" class="btn btn-primary btn-block" value="Create">
+                                <input type="submit" class="btn btn-primary btn-block" value="Create User">
                             </div>
                         </div>
                     </div>

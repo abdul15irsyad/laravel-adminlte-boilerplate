@@ -18,7 +18,7 @@
                     <div class="text-right mb-3">
                         <a href="#" class="btn btn-primary">Permission Role</a>
                     </div>
-                    <table class="table table-bordered table-striped yajra-datatable">
+                    <table class="table table-striped yajra-datatable">
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>#</th>
@@ -55,7 +55,7 @@
             }
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'role.role_name', name: 'role.role_name'},
             {data: 'permission.permission_title', name: 'permission.permission_title'},
             {
