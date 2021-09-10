@@ -37,6 +37,16 @@ button:focus{
   outline: none !important;
 }
 
+.btn-transparent{
+  background-color: transparent;
+  border: none;
+  transition: .3s;
+}
+
+.btn-transparent:hover{
+  background-color: rgba(0,0,0,.05);
+}
+
 .border-none{
   border: none !important;
 }
