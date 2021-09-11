@@ -46,7 +46,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="password" class="d-block mb-0">Password</label>
+                            <label for="password" class="d-block mb-0">Password <span class="text-sm text-secondary font-weight-normal">(optional)</span></label>
                             <span class="text-sm text-secondary">Minimum 8 characters and must contain lowercase letters (a-z), uppercase (A-Z), and numbers (0-9)</span>
                             <div class="input-group input-password">
                                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="********" value="{{ old('password') }}">
@@ -61,7 +61,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="confirm_password">Confirm Password</label>
+                            <label for="confirm_password">Confirm Password <span class="text-sm text-secondary font-weight-normal">(optional)</span></label>
                             <div class="input-group input-password">
                                 <input type="password" class="form-control @error('confirm_password') is-invalid @enderror" id="confirm_password" name="confirm_password" placeholder="retype your password">
                                 <div class="input-group-append">

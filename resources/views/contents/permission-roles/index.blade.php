@@ -12,7 +12,9 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
+            @if(session('message'))
             @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
+            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="text-right mb-3">

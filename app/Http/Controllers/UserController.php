@@ -92,6 +92,7 @@ class UserController extends Controller
             'markdown' => 'mails.verify-email',
         ];
         MailHelper::send_token_to_user($user,'email_verification',$data);
+        
 
         return redirect()
             ->route('users')
@@ -166,7 +167,7 @@ class UserController extends Controller
             return redirect()
             ->route('users')
             ->with('type', 'danger')
-            ->with('message', 'Delete user failed, must be at least 1 super admin');
+            ->with('message', 'Delete user failed, there is must be at least 1 super admin');
         }
 
         $user->delete();

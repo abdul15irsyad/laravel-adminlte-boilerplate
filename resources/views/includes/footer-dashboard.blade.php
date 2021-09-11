@@ -1,5 +1,5 @@
 <!-- Main Footer -->
-<footer class="main-footer  text-sm text-secondary">
+<footer class="main-footer text-sm text-secondary">
   <div class="container-fluid">
     <div class="row justify-content-between">
       <div class="col-md-6 col-12 text-md-left text-center">

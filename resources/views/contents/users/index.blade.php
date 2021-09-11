@@ -12,7 +12,9 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
+            @if(session('message'))
             @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
+            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="text-right mb-3">
@@ -51,11 +53,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Delete <b class="nickname"></b> ?</p>
+                @include('includes.alert',['message'=>'This action cannot be undo','type'=>'warning'])
+                <p>Are you sure want to delete <b class="nickname"></b> ?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="#" class="btn btn-danger btn-delete-modal">Delete</a>
+                <button type="button" class="btn btn-transparent" data-dismiss="modal">Cancel</button>
+                <a href="#" class="btn btn-danger btn-delete-modal"><i class="far fa-fw fa-trash-alt"></i> Delete</a>
             </div>
         </div>
     </div>
@@ -93,6 +96,7 @@
         
         // add event after datatables draw done
         table.on('draw.dt', function(e, settings, json) {
+            // show confirmation modal on delete
             let btnDeletes = document.querySelectorAll('.btn-delete')
             btnDeletes.forEach(btnDelete => {
                 let deleteModal = document.querySelector('#modal-delete')
@@ -100,8 +104,8 @@
                 let dataLink = btnDelete.getAttribute('data-link')
                 let dataNickname = btnDelete.getAttribute('data-nickname')
                 btnDelete.addEventListener('click', e => {
-                    console.log({dataLink,dataNickname})
                     e.preventDefault()
+                    // show confirmation modal on delete
                     nickname.innerHTML = dataNickname
                     $('#modal-delete').modal('show')
                     let btnDeleteModal = deleteModal.querySelector('.btn-delete-modal')

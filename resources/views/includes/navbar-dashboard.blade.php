@@ -59,11 +59,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Logout from <b>{{ auth('web')->user()->user_username }}</b> account ?</p>
+                <p>Are you sure want to logout from <b>{{ auth('web')->user()->user_username }}</b> account ?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a href="{{ route('logout') }}" class="btn btn-danger btn-logout">Yes, Logout</a>
+                <button type="button" class="btn btn-transparent" data-dismiss="modal">Cancel</button>
+                <a href="{{ route('logout') }}" class="btn btn-danger btn-logout">Logout</a>
             </div>
         </div>
     </div>

@@ -92,7 +92,7 @@
                     <div class="card-footer">
                         <div class="row justify-content-end">
                             <div class="col-md-auto col-5">
-                                <a href="{{ route('users') }}" class="btn btn-default btn-block">Cancel</a>
+                                <a href="{{ route('users') }}" class="btn btn-transparent btn-block">Cancel</a>
                             </div>
                             <div class="col-md-auto col-7">
                                 <input type="submit" class="btn btn-primary btn-block" value="Create User">
@@ -116,7 +116,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('.select2').select2({
-            theme: 'bootstrap4'
+            theme: 'bootstrap4',
         });
     });
 </script>
