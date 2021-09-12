@@ -36,12 +36,6 @@
                                 <p>Roles</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('permission-roles') }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('permission-roles')]) ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-key"></i>
-                                <p>Permission Roles</p>
-                            </a>
-                        </li>
                     </ul>
                 </li>
             </ul>

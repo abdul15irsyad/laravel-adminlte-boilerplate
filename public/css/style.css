@@ -53,7 +53,7 @@ textarea{
 }
 
 .text-pill{
-  background-color: #e2e2e2;
+  background-color: #cef1a5;
   border-radius: 100px;
   display: inline-block;
   margin: 3px;
@@ -183,4 +183,12 @@ input.is-invalid ~ .input-group-append .input-group-text,
 /* Disabled Button */
 .btn.disabled, .btn:disabled{
   cursor: default;
+}
+
+/* select */
+.select2 .select2-search__field{
+  padding-left: .25rem!important;
+}
+.input-group>.select2-container--bootstrap4:not(:last-child) .select2-selection{
+  border-radius: .25rem !important;
 }

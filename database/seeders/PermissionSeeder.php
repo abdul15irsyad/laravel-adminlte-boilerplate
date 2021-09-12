@@ -48,22 +48,6 @@ class PermissionSeeder extends Seeder
                 "permission_title" => "Delete Role",
                 "permission_slug" => Str::slug("Delete Role"),
             ],
-            [
-                "permission_title" => "Create Permission Role",
-                "permission_slug" => Str::slug("Create Permission Role"),
-            ],
-            [
-                "permission_title" => "Read Permission Role",
-                "permission_slug" => Str::slug("Read Permission Role"),
-            ],
-            [
-                "permission_title" => "Update Permission Role",
-                "permission_slug" => Str::slug("Update Permission Role"),
-            ],
-            [
-                "permission_title" => "Delete Permission Role",
-                "permission_slug" => Str::slug("Delete Permission Role"),
-            ],
         ];
 
         foreach($rows as $row){

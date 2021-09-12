@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use DB, Hash, TokenHelper;
+use DB, Hash, TokenHelper, MailHelper;
 use Carbon\Carbon;
 use App\Mail\UserMail;
 use App\Models\User;
@@ -45,23 +45,13 @@ class UserSeeder extends Seeder
             if($verify_email){
                 // send activation token to user email
                 $user = User::where('user_username',$row['user_username'])->first();
-                // generate token
-                $new_token = TokenHelper::generate_token('email_verification');
-                // add token to database
-                $expired_at = Carbon::now()->addMinutes(60);
-                $token = new Token;
-                $token->token = $new_token;
-                $token->token_type = 'email_verification';
-                $token->user_id = $user->id;
-                $token->expired_at = $expired_at;
-                $token->save();
+
+                // create new token and then send to email
                 $data = [
                     'subject' => 'Email Verification',
-                    'user' => $user,
-                    'token' => $token,
                     'markdown' => 'mails.verify-email',
                 ];
-                Mail::to($user->user_email)->send(new UserMail($data));
+                MailHelper::send_token_to_user($user,'email_verification',$data);
             }
 		}
     }

@@ -51,8 +51,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                @include('includes.alert',['message'=>'This action cannot be undo','type'=>'warning'])
                 <p>Are you sure want to delete <b class="nickname"></b> ?</p>
+                @include('includes.alert',['message'=>'This action cannot be undo!','type'=>'warning','class'=>'p-2'])
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">Cancel</button>
@@ -77,19 +77,27 @@
                     username: <?= json_encode(auth('web')->user()->user_username) ?>,
                 },
                 dataSrc: json => json.data.map(item => {
+                    // permission pill text
                     let pillText = (text,classes=null) => {
-                        let wrapper = '<div class="text-pill text-sm '+classes+'">'
+                        let wrapper = '<div class="text-pill text-xs '+classes+'">'
                         wrapper += text
                         wrapper += '</div>'
                         return wrapper
                     }
-                    item.permissions = ''
-                    if(item.role_slug=='super-admin'){
-                        item.permissions += pillText('All Access', 'bg-success')
+                    if(item.permission_roles.length == 0){
+                        item.permissions = '<span class="text-sm">No Permission</span>'
                     }else{
-                        item.permission_roles.forEach(permission_role=>{
-                            item.permissions += pillText(permission_role.permission.permission_title)
+                        item.permissions = ''
+                        // max show permission
+                        let max = 4
+                        item.permission_roles.forEach((permission_role,i)=>{
+                            if(i < max){
+                                item.permissions += pillText(permission_role.permission.permission_title)
+                            }
                         })
+                        if(item.permission_roles.length > max){
+                            item.permissions += pillText('etc . . .')
+                        }
                     }
                     return item
                 })
@@ -97,7 +105,7 @@
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'role_name', name: 'role_name'},
-                {data: 'permissions', name: 'permissions'},
+                {data: 'permissions', name: 'permissions', orderable: false},
                 {
                     data: 'action', 
                     name: 'action', 
@@ -105,6 +113,26 @@
                     searchable: false
                 },
             ]
+        });
+
+        // add event after datatables draw done
+        table.on('draw.dt', function(e, settings, json) {
+            // show confirmation modal on delete
+            let btnDeletes = document.querySelectorAll('.btn-delete')
+            btnDeletes.forEach(btnDelete => {
+                let deleteModal = document.querySelector('#modal-delete')
+                let nickname = deleteModal.querySelector('.nickname')
+                let dataLink = btnDelete.getAttribute('data-link')
+                let dataNickname = btnDelete.getAttribute('data-nickname')
+                btnDelete.addEventListener('click', e => {
+                    e.preventDefault()
+                    // show confirmation modal on delete
+                    nickname.innerHTML = dataNickname
+                    $('#modal-delete').modal('show')
+                    let btnDeleteModal = deleteModal.querySelector('.btn-delete-modal')
+                    btnDeleteModal.setAttribute('href',dataLink)
+                })
+            })
         });
     });
 </script>

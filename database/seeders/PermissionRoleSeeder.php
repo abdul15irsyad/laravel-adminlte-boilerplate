@@ -17,15 +17,15 @@ class PermissionRoleSeeder extends Seeder
         $permission_roles = [
             [
                 "role_id" => 1,
-                "permission_ids" => [1,2,3,4,5,6,7,8,9,10,11,12],
+                "permission_ids" => [1,2,3,4,5,6,7,8],
             ],
             [
                 "role_id" => 2,
-                "permission_ids" => [],
+                "permission_ids" => [1,2,3],
             ],
             [
                 "role_id" => 3,
-                "permission_ids" => [],
+                "permission_ids" => [5,6,7],
             ],
         ];
 

@@ -15,7 +15,13 @@ class UserController extends Controller
     public function get_users(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::with(['role'])->get();
+            if($request->get('page') == 'users'){
+                $data = User::with(['role'])->get();
+            }else if($request->get('page') == 'detail-role'){
+                $data = User::with(['role'])->whereHas('role',function($query) use($request){
+                    $query->where('role_slug',$request->get('role'));
+                })->get();
+            }
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -103,7 +109,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $id = $request->route('id');
-        $user = User::where('id',$id)->firstOrFail();
+        $user = User::findOrFail($id);
         $roles = Role::all();
         $data = [
             'title' => 'Update User',
@@ -130,7 +136,7 @@ class UserController extends Controller
             'role' => 'required|exists:roles,role_slug',
         ]);
 
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $user->user_name = $request->input('name');
         $user->user_username = $request->input('username');
         if($user->user_email != $request->input('email')){
@@ -158,16 +164,16 @@ class UserController extends Controller
     public function delete(Request $request)
     {
         $id = $request->route('id');
-        $user = User::where('id',$id)->firstOrFail();
+        $user = User::findOrFail($id);
         
         $super_admins = User::whereHas('role',function($query){
             $query->where('role_slug','super-admin');
         })->get();
         if($user->role->role_slug == 'super-admin' && $super_admins->count() <= 1){
             return redirect()
-            ->route('users')
-            ->with('type', 'danger')
-            ->with('message', 'Delete user failed, there is must be at least 1 super admin');
+                ->route('users')
+                ->with('type', 'danger')
+                ->with('message', 'Delete user failed, there is must be at least 1 super admin');
         }
 
         $user->delete();

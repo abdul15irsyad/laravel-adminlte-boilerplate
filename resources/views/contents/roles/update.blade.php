@@ -13,14 +13,14 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
-            <form action="{{ route('roles.create') }}" method="post" autocomplete="off">
+            <form action="{{ route('roles.update',['id' => $role->id]) }}" method="post" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Role Name</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control @if($errors->has('name') || $errors->has('slug')) is-invalid @endif" id="name" name="name" placeholder="eg: Copywritter" value="{{ old('name') }}">
+                                <input type="text" class="form-control @if($errors->has('name') || $errors->has('slug')) is-invalid @endif" id="name" name="name" placeholder="eg: Copywritter" value="{{ old('name',$role->role_name) }}">
                                 @error('name')
                                 <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label for="desc">Description <span class="text-sm text-secondary font-weight-normal">(optional)</span></label>
                             <div class="input-group mb-3">
-                                <textarea class="form-control @error('desc') is-invalid @enderror" id="desc" name="desc" placeholder="write description here..." rows="3">{{ old('desc') }}</textarea>
+                                <textarea class="form-control @error('desc') is-invalid @enderror" id="desc" name="desc" placeholder="write description here..." rows="3">{{ old('desc',$role->role_desc) }}</textarea>
                                 @error('desc')
                                 <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
@@ -43,11 +43,11 @@
                             <div class="input-group">
                                 <select class="form-control select2 @error('permission.*') is-invalid @enderror" id="permission" name="permission[]" multiple>
                                     @foreach($permissions as $permission)
-                                    <option value="{{ $permission->permission_slug }}" <?= in_array($permission->permission_slug,old('permission') ?? []) ? 'selected' : '' ?>>{{ $permission->permission_title }}</option>
+                                    <option value="{{ $permission->permission_slug }}" <?= in_array($permission->permission_slug,old('permission',$role_permissions) ?? []) ? 'selected' : '' ?>>{{ $permission->permission_title }}</option>
                                     @endforeach
                                 </select>
                                 @error('permission.*')
-                                <div class="invalid-feedback pl-2" role="alert">{{ $message }}</div>
+                                <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                                 <a href="{{ route('roles') }}" class="btn btn-transparent btn-block">Cancel</a>
                             </div>
                             <div class="col-md-auto col-7">
-                                <input type="submit" class="btn btn-primary btn-block" value="Create Role">
+                                <input type="submit" class="btn btn-primary btn-block" value="Save Changes">
                             </div>
                         </div>
                     </div>

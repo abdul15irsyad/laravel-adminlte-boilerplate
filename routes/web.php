@@ -47,15 +47,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [RoleController::class, 'index'])->name('roles');
         Route::get('/create', [RoleController::class, 'create'])->name('roles.create');
         Route::post('/create', [RoleController::class, 'store'])->name('roles.create');
+        Route::get('/{id}/detail', [RoleController::class, 'detail'])->name('roles.detail');
         Route::get('/{id}/update', [RoleController::class, 'update'])->name('roles.update');
         Route::post('/{id}/update', [RoleController::class, 'save'])->name('roles.update');
         Route::get('/{id}/delete', [RoleController::class, 'delete'])->name('roles.delete');
-    });
-    // permission roles
-    Route::prefix('permission-roles')->group(function(){
-        Route::get('/', [PermissionRoleController::class, 'index'])->name('permission-roles');
-        Route::get('/create', [PermissionRoleController::class, 'create'])->name('permission-roles.create');
-        Route::post('/create', [PermissionRoleController::class, 'store'])->name('permission-roles.create');
     });
     // auth
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

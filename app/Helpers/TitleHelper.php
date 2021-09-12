@@ -8,13 +8,10 @@ class TitleHelper {
                'Users','Create User','Update User',
             ],
             'roles' => [
-                'Roles','Create Role','Update Role',
-            ],
-            'permission-roles' => [
-                'Permission Role','Create Permission Role','Update Permission Role',
+                'Roles','Detail Role','Create Role','Update Role',
             ],
         ];
-        $titles['user-management'] = [...$titles['users'],...$titles['roles'],...$titles['permission-roles']];
+        $titles['user-management'] = [...$titles['users'],...$titles['roles']];
         return $titles[$title];
     }
 }

@@ -53,8 +53,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                @include('includes.alert',['message'=>'This action cannot be undo','type'=>'warning'])
                 <p>Are you sure want to delete <b class="nickname"></b> ?</p>
+                @include('includes.alert',['message'=>'This action cannot be undo!','type'=>'warning','class'=>'p-2'])
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">Cancel</button>
@@ -77,6 +77,7 @@
                 type: "POST",
                 data: {
                     username: <?= json_encode(auth('web')->user()->user_username) ?>,
+                    page: 'users',
                 }
             },
             columns: [
