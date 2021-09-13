@@ -14,28 +14,23 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
-                    <div class="form-group">
-                        <label>Role Name</label>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="name" name="name" value="{{ $role->role_name }}" disabled>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <div class="input-group mb-3">
-                            <textarea class="form-control" id="desc" name="desc" rows="3" disabled>{{ $role->role_desc }}</textarea>
-                        </div>
+                    <div class="role-detail mb-5">
+                        <h2 class="h2 font-weight-bold">{{ $role->role_name }}</h2>
+                        <p class="lead">{{ $role->role_desc ?? 'No Description' }}</p>
                     </div>
                     <div class="form-group">
                         <label>Permissions</label>
-                        <div class="input-group">
-                            @foreach($role->permission_roles as $permission_role)
-                            <div class="text-pill text-sm">{{ $permission_role->permission->permission_title }}</div>
-                            @endforeach
+                        <div class="input-group mb-4">
+                            @forelse($role->permission_roles as $permission_role)
+                            <div class="text-pill text-sm bg-light-green">{{ $permission_role->permission->permission_title }}</div>
+                            @empty
+                            <span class="lead">No Permission</span>
+                            @endforelse
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Users in this role</label>
+                        @if($role->users->count() > 0)
                         <table class="table table-striped yajra-datatable">
                             <thead class="thead-dark">
                                 <tr class="text-center">
@@ -48,6 +43,9 @@
                             <tbody>
                             </tbody>
                         </table>
+                        @else
+                        <div class="lead">No Users</div>
+                        @endif
                     </div>
                 </div>
                 <!-- ./card-body -->

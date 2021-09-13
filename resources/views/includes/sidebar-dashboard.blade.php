@@ -18,15 +18,15 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {{ in_array($title,TitleHelper::all_title('user-management')) ? 'menu-is-opening menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ in_array($title,TitleHelper::all_title('user-management')) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>User Management<i class="fas fa-angle-left right"></i></p>
+                <li class="nav-item {{ in_array($title,TitleHelper::all_title('account')) ? 'menu-is-opening menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ in_array($title,TitleHelper::all_title('account')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Account<i class="fas fa-angle-left right"></i></p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('users') }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('users')]) ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>Users</p>
                             </a>
                         </li>

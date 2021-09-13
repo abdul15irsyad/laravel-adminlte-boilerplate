@@ -11,7 +11,7 @@ class TitleHelper {
                 'Roles','Detail Role','Create Role','Update Role',
             ],
         ];
-        $titles['user-management'] = [...$titles['users'],...$titles['roles']];
+        $titles['account'] = [...$titles['users'],...$titles['roles']];
         return $titles[$title];
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use App\Models\PermissionRole;
 use DataTables, ButtonHelper, Str;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class RoleController extends Controller
     public function get_roles(Request $request)
     {
         if ($request->ajax()) {
-            $data = Role::with(['permission_roles','permission_roles.permission'])->get();
+            $data = Role::with(['users','permission_roles','permission_roles.permission'])->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -32,6 +33,7 @@ class RoleController extends Controller
                         $btn .= ButtonHelper::datatable_button('delete',[
                             'href' => route('roles.delete',['id' => $row->id]),
                             'nickname' => $row->role_name,
+                            'additional-attribute' => 'data-user-count="'.$row->users->count().'"',
                             'title' => 'delete',
                             'icon' => 'far fa-trash-alt',
                         ]);
@@ -59,7 +61,7 @@ class RoleController extends Controller
     public function detail(Request $request)
     {
         $id = $request->route('id');
-        $role = Role::with(['permission_roles.permission'])->findOrFail($id);
+        $role = Role::with(['users','permission_roles.permission'])->findOrFail($id);
         $data = [
             'title' => 'Detail Role',
             'breadcumbs' => [
@@ -67,7 +69,7 @@ class RoleController extends Controller
                 ['text' => 'Roles', 'status' => null, 'link' => route('roles')],
                 ['text' => 'Detail', 'status' => 'active', 'link' => '#'],
             ],
-            'role' => $role
+            'role' => $role,
         ];
         return view('contents.roles.detail', $data);
     }

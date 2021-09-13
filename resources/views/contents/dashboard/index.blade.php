@@ -12,12 +12,19 @@
             @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
             @endif
             <!-- Info boxes -->
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-12 col-sm-6 col-md-3">
                     @include('includes.info-box',[
-                        'icon'=>'fas fa-user-tag',
+                        'icon'=>'fas fa-users',
                         'big_text'=> $users->count(),
                         'text'=>'Users'])
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    @include('includes.info-box',[
+                        'icon'=>'fas fa-user-cog',
+                        'big_text'=> $roles->count(),
+                        'text'=>'Role'])
                 </div>
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">

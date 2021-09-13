@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionRoleController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
@@ -51,6 +52,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/update', [RoleController::class, 'update'])->name('roles.update');
         Route::post('/{id}/update', [RoleController::class, 'save'])->name('roles.update');
         Route::get('/{id}/delete', [RoleController::class, 'delete'])->name('roles.delete');
+    });
+    // profile
+    Route::prefix('profile')->group(function(){
+        Route::get('/', [ProfileController::class, 'index'])->name('profile');
+        Route::get('/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/update', [ProfileController::class, 'save'])->name('profile.update');
+        Route::get('/change-password', [ProfileController::class, 'change_password'])->name('profile.change.password');
+        Route::post('/change-password', [ProfileController::class, 'save_password'])->name('profile.change.password');
     });
     // auth
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

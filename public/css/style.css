@@ -2,6 +2,7 @@
 /* Root */
 :root{
   --primary: #0074bc !important;
+  --light-green: #cef1a5;
   --table-radius: 5px;
 }
 
@@ -53,11 +54,14 @@ textarea{
 }
 
 .text-pill{
-  background-color: #cef1a5;
   border-radius: 100px;
   display: inline-block;
   margin: 3px;
   padding: 5px 12px;
+}
+
+.bg-light-green{
+  background-color: var(--light-green) !important;
 }
 
 .border-none{
@@ -72,6 +76,12 @@ textarea{
 /* Navbar */
 .navbar{
   box-shadow: 0px 3px 10px rgb(0 0 0 / .1);
+}
+.navbar .nav-link.btn-transparent{
+  padding: 8px 12px;
+  border-radius: 50%;
+  margin-left: .25rem;
+  margin-right: .25rem;
 }
 
 /* Datepicker */
@@ -93,6 +103,13 @@ a.inherit{
   vertical-align: middle !important;
   text-align: center;
   max-width: 400px;
+}
+.table .btn.btn-transparent{
+  padding-left: 5.75px !important;
+  padding-right: 5.75px !important;
+  /* border-radius: 50%; */
+  margin-left: 1px;
+  margin-right: 1px;
 }
 @media only screen and (min-width:768px){
   .table tr td:first-child{

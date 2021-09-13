@@ -23,7 +23,7 @@
     <ul class="navbar-nav ml-auto">
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item">
-            <a class="nav-link" href="#" title="Notification">
+            <a class="nav-link btn btn-transparent" href="#" title="Notification">
                 <i class="fas fa-bell"></i>
                 @if(auth('web')->user()->unreadNotifications->count()>0)
                 <span class="badge badge-danger navbar-badge">{{ auth('web')->user()->unreadNotifications->count() }}</span>
@@ -31,18 +31,18 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#" title="Settings">
+            <a class="nav-link btn btn-transparent" href="#" title="Settings">
                 <i class="fas fa-cog"></i>
             </a>
         </li>
         <li class="nav-item dropdown ml-3">
-            <a href="#" class="btn btn-default" data-toggle="dropdown">
-                <span>{{ auth()->user()->user_username }}</span>
+            <a href="#" class="btn btn-transparent text-dark font-weight-bold" data-toggle="dropdown">
+                <span>{{ auth()->user()->user_username }} <i class="fas fa-fw fa-chevron-down text-xs"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
-                <a href="#" class="dropdown-item"><i class="fas fa-user fa-fw mr-2"></i> Profile</a>
+                <a href="{{ route('profile') }}" class="dropdown-item"><i class="fas fa-user fa-fw mr-2"></i> Profile</a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item hover-danger" data-toggle="modal" data-target="#modal-logout"><i class="fas fa-power-off fa-fw mr-2"></i> Logout</a>
+                <a href="#" class="dropdown-item hover-danger" data-toggle="modal" data-target="#modal-logout"><i class="fas fa-sign-out-alt fa-fw mr-2"></i> Logout</a>
             </div>
         </li>
     </ul>
@@ -63,7 +63,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">Cancel</button>
-                <a href="{{ route('logout') }}" class="btn btn-danger btn-logout">Logout</a>
+                <a href="{{ route('logout') }}" class="btn btn-danger btn-logout"><i class="fas fa-fw fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
     </div>

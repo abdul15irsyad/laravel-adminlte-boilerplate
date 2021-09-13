@@ -26,6 +26,7 @@
                                 <th>#</th>
                                 <th>Role Name</th>
                                 <th>Permissions</th>
+                                <th>Users</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -51,8 +52,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to delete <b class="nickname"></b> ?</p>
-                @include('includes.alert',['message'=>'This action cannot be undo!','type'=>'warning','class'=>'p-2'])
+                <p class="mb-0">Are you sure want to delete <b class="nickname"></b> ?</p>
+                <p class="text-sm text-danger">This action cannot be undo!</p>
+                @include('includes.alert',['message'=>'','type'=>'danger','class'=>'p-2 mb-1 message-warning'])
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">Cancel</button>
@@ -79,7 +81,7 @@
                 dataSrc: json => json.data.map(item => {
                     // permission pill text
                     let pillText = (text,classes=null) => {
-                        let wrapper = '<div class="text-pill text-xs '+classes+'">'
+                        let wrapper = '<div class="text-pill text-xs bg-light-green '+classes+'">'
                         wrapper += text
                         wrapper += '</div>'
                         return wrapper
@@ -100,12 +102,20 @@
                         }
                     }
                     return item
-                })
+                }),
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'role_name', name: 'role_name'},
                 {data: 'permissions', name: 'permissions', orderable: false},
+                {
+                    data: 'users.length', 
+                    name: 'users_length',
+                    render: (data, type, row) => {
+                        if(data == 0) return '<span class="text-sm">empty</span>'
+                        return data > 1 ? (data + ' users') : (data + ' user')
+                    }
+                },
                 {
                     data: 'action', 
                     name: 'action', 
@@ -119,15 +129,25 @@
         table.on('draw.dt', function(e, settings, json) {
             // show confirmation modal on delete
             let btnDeletes = document.querySelectorAll('.btn-delete')
+            let deleteModal = document.querySelector('#modal-delete')
+            let nickname = deleteModal.querySelector('.nickname')
+            let messageWarning = deleteModal.querySelector('.message-warning')
             btnDeletes.forEach(btnDelete => {
-                let deleteModal = document.querySelector('#modal-delete')
-                let nickname = deleteModal.querySelector('.nickname')
                 let dataLink = btnDelete.getAttribute('data-link')
                 let dataNickname = btnDelete.getAttribute('data-nickname')
+                let dataUserCount = parseInt(btnDelete.getAttribute('data-user-count'))
                 btnDelete.addEventListener('click', e => {
                     e.preventDefault()
                     // show confirmation modal on delete
                     nickname.innerHTML = dataNickname
+                    // if user in deleted role not empty
+                    console.log(dataUserCount)
+                    if(dataUserCount > 0){
+                        messageWarning.style.display = 'block'
+                        messageWarning.innerHTML = `There is ${dataUserCount} users, delete the role will also delete the users!`
+                    } else {
+                        messageWarning.style.display = 'none'
+                    }
                     $('#modal-delete').modal('show')
                     let btnDeleteModal = deleteModal.querySelector('.btn-delete-modal')
                     btnDeleteModal.setAttribute('href',dataLink)

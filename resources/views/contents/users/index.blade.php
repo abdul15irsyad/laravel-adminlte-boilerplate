@@ -53,8 +53,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Are you sure want to delete <b class="nickname"></b> ?</p>
-                @include('includes.alert',['message'=>'This action cannot be undo!','type'=>'warning','class'=>'p-2'])
+                <p class="mb-0">Are you sure want to delete <b class="nickname"></b> ?</p>
+                <p class="text-sm text-danger">This action cannot be undo!</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">Cancel</button>

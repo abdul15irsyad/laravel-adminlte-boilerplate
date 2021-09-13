@@ -34,6 +34,7 @@ class UserController extends Controller
                     $btn .= ButtonHelper::datatable_button('delete',[
                         'href' => route('users.delete',['id' => $row->id]),
                         'nickname' => $row->user_username,
+                        'additional-attribute' => null,
                         'title' => 'delete',
                         'icon' => 'far fa-trash-alt',
                     ]);
@@ -158,7 +159,7 @@ class UserController extends Controller
         return redirect()
             ->route('users')
             ->with('type', 'success')
-            ->with('message', 'Update user successfull');        
+            ->with('message', 'Update user successfull'); 
     }
 
     public function delete(Request $request)
