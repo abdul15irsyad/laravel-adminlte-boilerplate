@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->datetime('email_verified_at')->nullable();
             $table->string('user_password');
 			$table->foreignId('role_id')->constrained();
+            $table->enum('user_status',['Y','N'])->default('Y');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 			$table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });

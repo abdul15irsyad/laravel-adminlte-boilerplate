@@ -18,8 +18,10 @@ class RoleSeeder extends Seeder
         $rows = [
             [
                 "role_name" => "Super Admin",
+                "role_desc" => "Has the highest access level for the entire function in account",
             ],[
                 "role_name" => "Admin",
+                "role_desc" => "Has the second highest access level, but can not access the Account Management and User Activity Log",
             ],[
                 "role_name" => "Copywriter",
             ]

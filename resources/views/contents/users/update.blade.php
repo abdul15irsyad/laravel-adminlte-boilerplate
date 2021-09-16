@@ -13,6 +13,9 @@
     <!-- Main content -->
     <section class="content content-dashboard">
         <div class="container-fluid">
+            @if(session('message'))
+            @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
+            @endif
             <form action="{{ route('users.update',['id'=>$user->id]) }}" method="post" autocomplete="off">
                 @csrf
                 <div class="card">
@@ -87,6 +90,19 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <div class="input-group">
+                                <select class="form-control select2 @error('status') is-invalid @enderror" id="status" name="status">
+                                    @foreach(['Active','Suspend'] as $status)
+                                    <option value="{{ $status }}" <?= old('status',$user->user_status)==$status ? 'selected' : '' ?>>{{ $status }}</option>
+                                    @endforeach
+                                </select>
+                                @error('status')
+                                <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     <!-- ./card-body -->
                     <div class="card-footer">
@@ -95,7 +111,7 @@
                                 <a href="{{ route('users') }}" class="btn btn-transparent btn-block">Cancel</a>
                             </div>
                             <div class="col-md-auto col-7">
-                                <input type="submit" class="btn btn-primary btn-block" value="Save Changes">
+                                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-fw fa-save"></i> Save Changes</button>
                             </div>
                         </div>
                     </div>

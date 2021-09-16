@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Permission;
-use App\Models\Role;
-use App\Models\User;
-use App\Models\PermissionRole;
+use App\Models\{Permission, Role, User, PermissionRole};
 use DataTables, ButtonHelper, Str;
 use Illuminate\Http\Request;
 

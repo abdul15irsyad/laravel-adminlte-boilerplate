@@ -31,6 +31,9 @@
     <script src="{{ asset('adminlte/dist/js/pages/dashboard2.js') }}"></script>
     <script type="text/javascript">
         let defaultDatatables = {
+            search: {
+                caseInsensitive: false
+            },
             order: [1,'asc'],
             processing: true,
             serverSide: true,
@@ -42,7 +45,7 @@
             ],
             language: {
                 searchPlaceholder: "search here..."
-            }
+            },
         };
         let defaultDatepicker = {
             autoclose: true,

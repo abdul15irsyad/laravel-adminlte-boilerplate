@@ -30,6 +30,11 @@ class User extends Authenticatable
         'deleted_at',
     ];
 
+    public function getUserStatusAttribute($value)
+    {
+        return $value == 'Y' ? "Active" : "Suspend";
+    }
+
     // for Auth Laravel
     public function getAuthPassword()
     {

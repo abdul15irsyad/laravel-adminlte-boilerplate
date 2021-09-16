@@ -9,6 +9,7 @@ use Carbon, DataTables, TitleHelper, ButtonHelper, TokenHelper, MailHelper, Hash
 use Illuminate\Http\Request;
 use App\Mail\UserMail;
 use Illuminate\Support\Facades\Mail;
+use App\Rules\NotLastActiveSuperAdmin;
 
 class UserController extends Controller
 {
@@ -26,6 +27,11 @@ class UserController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                     $btn = '<div class="text-center">';
+                    $btn .= ButtonHelper::datatable_button('detail',[
+                        'href' => route('users.detail',['id' => $row->id]),
+                        'title' => 'detail',
+                        'icon' => 'fas fa-info',
+                    ]);
                     $btn .= ButtonHelper::datatable_button('edit',[
                         'href' => route('users.update',['id' => $row->id]),
                         'title' => 'edit',
@@ -56,6 +62,22 @@ class UserController extends Controller
             ],
         ];
         return view('contents.users.index', $data);
+    }
+
+    public function detail(Request $request)
+    {
+        $id = $request->route('id');
+        $user = User::with(['role'])->findOrFail($id);
+        $data = [
+            'title' => 'Detail User',
+            'breadcumbs' => [
+                ['text' => 'Dashboard', 'status' => null, 'link' => route('dashboard')],
+                ['text' => 'Users', 'status' => null, 'link' => route('users')],
+                ['text' => 'Detail', 'status' => 'active', 'link' => '#'],
+            ],
+            'user' => $user,
+        ];
+        return view('contents.users.detail', $data);
     }
 
     public function create()
@@ -135,9 +157,11 @@ class UserController extends Controller
             'password' => 'nullable|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])./',
             'confirm_password' => $request->input('password') ? 'same:password' : 'nullable',
             'role' => 'required|exists:roles,role_slug',
+            'status' => ['required','in:Active,Suspend', new NotLastActiveSuperAdmin($id)],
         ]);
-
+        
         $user = User::findOrFail($id);
+        $user->user_status = $request->input('status') == 'Active' ? 'Y' : 'N';
         $user->user_name = $request->input('name');
         $user->user_username = $request->input('username');
         if($user->user_email != $request->input('email')){
@@ -167,9 +191,7 @@ class UserController extends Controller
         $id = $request->route('id');
         $user = User::findOrFail($id);
         
-        $super_admins = User::whereHas('role',function($query){
-            $query->where('role_slug','super-admin');
-        })->get();
+        $super_admins = User::whereHas('role',fn($query) => $query->where('role_slug','super-admin'))->get();
         if($user->role->role_slug == 'super-admin' && $super_admins->count() <= 1){
             return redirect()
                 ->route('users')

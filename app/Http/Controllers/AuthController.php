@@ -46,13 +46,26 @@ class AuthController extends Controller
                 //         ->with('type', 'warning')
                 //         ->with('message', 'Verify your email first');
                 // }
+                
+                // if account wasn't active
+                if($user->user_status!='Active'){
+                    return redirect()
+                        ->back()
+                        ->withInput()
+                        ->with('type', 'warning')
+                        ->with('message', 'Your account is inactive, please contact Administrator');
+                }
+
                 auth('web')->attempt($data);
+                $user = User::findOrFail(auth('web')->user()->id);
+                activity()->log($user->user_username.' has logged in');
+
                 return redirect()->route('dashboard');
             }
         }
         
         return redirect()
-            ->route('login')
+            ->back()
             ->withInput()
             ->with('type', 'warning')
             ->with('message', 'Username or password is incorrect');

@@ -59,7 +59,7 @@
                                 <a href="{{ route('roles') }}" class="btn btn-transparent btn-block">Cancel</a>
                             </div>
                             <div class="col-md-auto col-7">
-                                <input type="submit" class="btn btn-primary btn-block" value="Save Changes">
+                                <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-fw fa-save"></i> Save Changes</button>
                             </div>
                         </div>
                     </div>

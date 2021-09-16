@@ -48,10 +48,8 @@
                         </div>
                         <input type="hidden" name="token" value="{{ old('token',$token->token) }}">
                         <div class="row">
-                            <div class="col-6">
-                            </div>
                             <!-- /.col -->
-                            <div class="col-6">
+                            <div class="col-12">
                                 <button type="submit" class="btn btn-primary btn-block">Save Password</button>
                             </div>
                             <!-- /.col -->

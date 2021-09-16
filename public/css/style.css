@@ -3,6 +3,7 @@
 :root{
   --primary: #0074bc !important;
   --light-green: #cef1a5;
+  --light-red: #ffbcbc;
   --table-radius: 5px;
 }
 
@@ -62,6 +63,10 @@ textarea{
 
 .bg-light-green{
   background-color: var(--light-green) !important;
+}
+
+.bg-light-red{
+  background-color: var(--light-red) !important;
 }
 
 .border-none{

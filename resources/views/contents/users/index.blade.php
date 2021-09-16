@@ -17,7 +17,7 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <div class="text-right mb-3">
+                    <div class="text-left mb-3">
                         <a href="{{ route('users.create') }}" class="btn btn-primary px-3">Create User</a>
                     </div>
                     <table class="table table-striped yajra-datatable">
@@ -28,6 +28,7 @@
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Role</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -78,7 +79,7 @@
                 data: {
                     username: <?= json_encode(auth('web')->user()->user_username) ?>,
                     page: 'users',
-                }
+                },
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
@@ -86,6 +87,16 @@
                 {data: 'user_username', name: 'user_username'},
                 {data: 'user_email', name: 'user_email'},
                 {data: 'role.role_name', name: 'role.role_name'},
+                {
+                    data: 'user_status',
+                    name: 'user_status',
+                    orderable: false,
+                    searchable: true,
+                    render: (data, type, row)=>{
+                        let color = data == 'Active' ? "green" : "red"
+                        return '<span class="text-pill text-xs bg-light-' + color + '">' + data + '</span>'
+                    }
+                },
                 {
                     data: 'action', 
                     name: 'action', 

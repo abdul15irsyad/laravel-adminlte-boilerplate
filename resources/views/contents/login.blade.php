@@ -19,7 +19,7 @@
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" name="username" placeholder="Username or Email" value="{{ old('username') }}">
                         </div>
-                        <div class="input-group input-password mb-3">
+                        <div class="input-group input-password mb-0">
                             <input type="password" class="form-control" name="password" placeholder="********">
                             <div class="input-group-append">
                                 <div class="input-group-text btn-show-password">
@@ -27,17 +27,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="text-right mb-3">
+                            <a href="{{ route('forgot.password') }}" class="btn btn-link text-sm">Forgot Password?</a>
+                        </div>
                         <div class="row justify-content-end">
                             <!-- /.col -->
-                            <div class="col-md-6 col-12">
+                            <div class="col-12">
                                 <button type="submit" class="btn btn-primary btn-block">Login</button>
                             </div>
                             <!-- /.col -->
                         </div>
                     </form>
-                </div>
-                <div class="card-footer text-center">
-                    <a href="{{ route('forgot.password') }}" class="btn btn-transparent text-dark">Forgot Password?</a>
                 </div>
                 <!-- /.card-body -->
             </div>

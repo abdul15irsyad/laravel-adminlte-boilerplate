@@ -24,11 +24,9 @@
                             @enderror
                         </div>
                         <div class="row">
-                            <div class="col-6">
-                            </div>
                             <!-- /.col -->
-                            <div class="col-6">
-                                <button type="submit" class="btn btn-primary btn-block">Send Email</button>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary btn-block">Send</button>
                             </div>
                             <!-- /.col -->
                         </div>

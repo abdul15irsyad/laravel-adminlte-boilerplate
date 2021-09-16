@@ -5,7 +5,7 @@ class TitleHelper {
     public static function all_title($title) {
         $titles = [
             'users' => [
-               'Users','Create User','Update User',
+               'Users', 'Detail User','Create User','Update User',
             ],
             'roles' => [
                 'Roles','Detail Role','Create Role','Update Role',

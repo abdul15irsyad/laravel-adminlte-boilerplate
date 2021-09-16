@@ -17,8 +17,8 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <div class="text-right mb-3">
-                        <a href="{{ route('roles.create') }}" class="btn btn-primary">Create Role</a>
+                    <div class="text-left mb-3">
+                        <a href="{{ route('roles.create') }}" class="btn btn-primary px-3">Create Role</a>
                     </div>
                     <table class="table table-striped yajra-datatable">
                         <thead class="thead-dark">
@@ -112,7 +112,7 @@
                     data: 'users.length', 
                     name: 'users_length',
                     render: (data, type, row) => {
-                        if(data == 0) return '<span class="text-sm">empty</span>'
+                        if(data == 0) return '<span class="text-sm text-secondary">empty</span>'
                         return data > 1 ? (data + ' users') : (data + ' user')
                     }
                 },
