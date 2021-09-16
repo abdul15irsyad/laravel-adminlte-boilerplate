@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <label>Users in this role</label>
                         @if($role->users->count() > 0)
-                        <table class="table table-striped yajra-datatable">
+                        <table class="table table-striped yajra-datatable text-sm">
                             <thead class="thead-dark">
                                 <tr class="text-center">
                                     <th>#</th>

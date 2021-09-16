@@ -18,8 +18,7 @@ class CreatePermissionRolesTable extends Migration
             $table->id();
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');	
             $table->foreignId('permission_id')->constrained('permissions');
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-			$table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamps();
         });
     }
 

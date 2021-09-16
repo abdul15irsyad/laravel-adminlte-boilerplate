@@ -36,7 +36,8 @@
             </a>
         </li>
         <li class="nav-item dropdown ml-3">
-            <a href="#" class="btn btn-transparent text-dark font-weight-bold" data-toggle="dropdown">
+            <a href="#" class="btn btn-transparent text-secondary text-md" data-toggle="dropdown">
+                <img class="img-circle border mr-1 d-none d-lg-inline" src="{{ asset('images/default-user.jpg') }}" alt="" height="24">
                 <span>{{ auth()->user()->user_username }} <i class="fas fa-fw fa-chevron-down text-xs"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">

@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://127.0.0.1:8012'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -67,7 +67,8 @@ return [
     |
     */
 
-    'timezone' => 'Asia/Jakarta',
+    // 'timezone' => 'UTC', // default
+    'timezone' => env('APP_TIMEZONE', 'Asia/Jakarta'),
 
     /*
     |--------------------------------------------------------------------------

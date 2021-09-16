@@ -2,9 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PermissionRoleController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\{
+    ActivityLogController,
+    RoleController,
+    UserController,
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +28,8 @@ Route::group(['prefix'=>'v1','middleware'=>'api'],function () {
     Route::prefix('roles')->group(function(){
         Route::post('/', [RoleController::class, 'get_roles'])->name('api.v1.roles');
     });
-    // permission roles
-    Route::prefix('permission-roles')->group(function(){
-        Route::post('/', [PermissionRoleController::class, 'get_permission_roles'])->name('api.v1.permission-roles');
+    // activity log
+    Route::prefix('activity-log')->group(function(){
+        Route::post('/', [ActivityLogController::class, 'get_activities'])->name('api.v1.activities');
     });
 });

@@ -20,7 +20,7 @@
                     <div class="text-left mb-3">
                         <a href="{{ route('users.create') }}" class="btn btn-primary px-3">Create User</a>
                     </div>
-                    <table class="table table-striped yajra-datatable">
+                    <table class="table table-striped yajra-datatable text-sm">
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>#</th>

@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Role;
-use App\Models\Token;
-use Carbon, DataTables, TitleHelper, ButtonHelper, TokenHelper, MailHelper, Hash, Route;
-use Illuminate\Http\Request;
+use Carbon, DataTables, TitleHelper, ButtonHelper, TokenHelper, MailHelper, Hash, Route, Mail;
 use App\Mail\UserMail;
-use Illuminate\Support\Facades\Mail;
+use App\Models\{User, Role, Token};
 use App\Rules\NotLastActiveSuperAdmin;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -161,6 +158,8 @@ class UserController extends Controller
         ]);
         
         $user = User::findOrFail($id);
+        $old_user = $user->replicate();
+        $password_change = false;
         $user->user_status = $request->input('status') == 'Active' ? 'Y' : 'N';
         $user->user_name = $request->input('name');
         $user->user_username = $request->input('username');
@@ -175,10 +174,23 @@ class UserController extends Controller
         }
         if($request->input('password')){
             $user->user_password  = Hash::make($request->input('password'));
+            $password_change = true;
         }
         $role = Role::where('role_slug',$request->input('role'))->first();
         $user->role_id = $role->id;
         $user->save();
+
+        // input activity log
+        $properties = [
+            'old' => $old_user->only(['user_name', 'user_username', 'user_email', 'role_id', 'user_status']),
+            'new' => $user->only(['user_name', 'user_username', 'user_email', 'role_id', 'user_status']),
+        ];
+        $properties['new']['password_change'] = $password_change;
+        activity()
+            ->on($user)
+            ->withProperties($properties)
+            ->event('updated')
+            ->log('has updated user');
 
         return redirect()
             ->route('users')

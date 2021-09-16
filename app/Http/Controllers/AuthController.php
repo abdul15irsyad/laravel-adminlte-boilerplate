@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use TokenHelper, MailHelper, Str;
 use App\Mail\UserMail;
+use App\Models\{Token, User};
 use App\Notifications\UserNotification;
-use App\Models\Token;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use TokenHelper, MailHelper;
+use Illuminate\Support\Facades\{Auth, Hash, Mail};
 
 class AuthController extends Controller
 {
@@ -57,8 +53,9 @@ class AuthController extends Controller
                 }
 
                 auth('web')->attempt($data);
-                $user = User::findOrFail(auth('web')->user()->id);
-                activity()->log($user->user_username.' has logged in');
+                
+                // input activity log
+                activity()->log('has logged in');
 
                 return redirect()->route('dashboard');
             }
@@ -180,6 +177,11 @@ class AuthController extends Controller
             'markdown' => 'mails.reset-password',
         ];
         MailHelper::send_token_to_user($user,'forgot_password',$data);
+        
+        // input activity log
+        activity()
+            ->log('has request forgot password')
+            ->by($user);
 
         return redirect()
             ->back()
@@ -289,7 +291,12 @@ class AuthController extends Controller
                 'user' => $user,
             ]
         ];
-        $user->notify(new UserNotification($data));
+        // $user->notify(new UserNotification($data));
+
+        // input activity log
+        activity()
+            ->log('has reset password')
+            ->by($user);
 
         return redirect()
             ->route('login')

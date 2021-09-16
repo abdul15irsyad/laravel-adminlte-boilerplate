@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Permission, Role, User, PermissionRole};
 use DataTables, ButtonHelper, Str;
+use App\Models\{Permission, Role, User, PermissionRole};
 use Illuminate\Http\Request;
 
 class RoleController extends Controller

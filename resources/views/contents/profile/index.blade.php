@@ -45,10 +45,10 @@
                                 <strong>Email</strong>
                                 <p class="text-muted h5 font-weight-normal">
                                     {{ $user->user_email }}
-                                    @if($user->email_verified_at)
-                                    <span class="text-pill text-xs bg-light-green text-success m-0"><i class="fas fa-check-circle"></i> verified</span>
-                                    @endif
                                 </p>
+                                @if($user->email_verified_at)
+                                <span class="text-pill text-xs bg-light-green text-dark m-0">verified</span>
+                                @endif
                                 @if(!$user->email_verified_at)
                                 @include('includes.alert',['message'=>'Please verified your email!','type'=>'warning','class'=>null])
                                 @endif

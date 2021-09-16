@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PermissionRole;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,7 @@ class PermissionRoleSeeder extends Seeder
      */
     public function run()
     {
-        $permission_roles = [
+        $rows = [
             [
                 "role_id" => 1,
                 "permission_ids" => [1,2,3,4,5,6,7,8],
@@ -29,13 +30,12 @@ class PermissionRoleSeeder extends Seeder
             ],
         ];
 
-        foreach($permission_roles as $permission_role){
-            foreach($permission_role['permission_ids'] as $permission_id){
-                $row = [
-                    "role_id" => $permission_role["role_id"],
-                    "permission_id" => $permission_id,
-                ];
-                DB::table("permission_roles")->insert($row);
+        foreach($rows as $row){
+            foreach($row['permission_ids'] as $id){
+                $permission_role = new PermissionRole;
+                $permission_role->role_id = $row["role_id"];
+                $permission_role->permission_id = $id;
+                $permission_role->save();
             }
 		}
     }

@@ -1,12 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PermissionRoleController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\{
+    ActivityLogController,
+    AuthController,
+    DashboardController,
+    PermissionRoleController,
+    ProfileController,
+    RoleController,
+    UserController,
+};
 
 // no middleware
 Route::get('/verify-email-process', [AuthController::class, 'verify_email_process'])->name('verify-email-process');
@@ -54,8 +57,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}/update', [RoleController::class, 'save'])->name('roles.update');
         Route::get('/{id}/delete', [RoleController::class, 'delete'])->name('roles.delete');
     });
-    Route::prefix('dashboard')->group(function(){
+    Route::prefix('activity-log')->group(function(){
         Route::get('/', [ActivityLogController::class, 'index'])->name('activity-log');
+        Route::get('/{id}/detail', [ActivityLogController::class, 'detail'])->name('activity-log.detail');
     });
     // profile
     Route::prefix('profile')->group(function(){

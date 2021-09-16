@@ -20,7 +20,7 @@
                     <div class="text-left mb-3">
                         <a href="{{ route('roles.create') }}" class="btn btn-primary px-3">Create Role</a>
                     </div>
-                    <table class="table table-striped yajra-datatable">
+                    <table class="table table-striped yajra-datatable text-sm">
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>#</th>
@@ -78,36 +78,28 @@
                 data: {
                     username: <?= json_encode(auth('web')->user()->user_username) ?>,
                 },
-                dataSrc: json => json.data.map(item => {
-                    // permission pill text
-                    let pillText = (text,classes=null) => {
-                        let wrapper = '<div class="text-pill text-xs bg-light-green '+classes+'">'
-                        wrapper += text
-                        wrapper += '</div>'
-                        return wrapper
-                    }
-                    if(item.permission_roles.length == 0){
-                        item.permissions = '<span class="text-sm">No Permission</span>'
-                    }else{
-                        item.permissions = ''
-                        // max show permission
-                        let max = 4
-                        item.permission_roles.forEach((permission_role,i)=>{
-                            if(i < max){
-                                item.permissions += pillText(permission_role.permission.permission_title)
-                            }
-                        })
-                        if(item.permission_roles.length > max){
-                            item.permissions += pillText('etc . . .')
-                        }
-                    }
-                    return item
-                }),
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
                 {data: 'role_name', name: 'role_name'},
-                {data: 'permissions', name: 'permissions', orderable: false},
+                {
+                    data: 'permission_roles', 
+                    name: 'permission_roles', 
+                    orderable: false,
+                    render: (data,type,row) => {
+                        let pillText = text => '<div class="text-pill text-xs bg-light-green">' + text + '</div>'
+                        if(data.length == 0) return '<span class="text-sm">No Permission</span>'
+                        else{
+                            // max show permission
+                            let result = '', max = 4
+                            data.forEach((permission_role,index)=>{
+                                if(index < max) result += pillText(permission_role.permission.permission_title)
+                            })
+                            result += (data.length > max) ? pillText('etc . . .') : ''
+                            return result
+                        }
+                    }
+                },
                 {
                     data: 'users.length', 
                     name: 'users_length',

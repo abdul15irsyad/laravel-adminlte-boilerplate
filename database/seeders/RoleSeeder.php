@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use DB;
+use DB, Str;
 use Illuminate\Database\Seeder;
-use Str;
+use App\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -24,12 +24,16 @@ class RoleSeeder extends Seeder
                 "role_desc" => "Has the second highest access level, but can not access the Account Management and User Activity Log",
             ],[
                 "role_name" => "Copywriter",
+                "role_desc" => null,
             ]
         ];
 
         foreach($rows as $row){
-            $row['role_slug'] = Str::slug($row['role_name']);
-			DB::table("roles")->insert($row);
+			$role = new Role;
+            $role->role_name = $row['role_name'];
+            $role->role_slug = Str::slug($row['role_name']);
+            $role->role_desc = $row['role_desc'];
+            $role->save();
 		}
     }
 }
