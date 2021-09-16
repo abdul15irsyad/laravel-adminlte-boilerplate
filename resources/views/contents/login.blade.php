@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="text-right mb-3">
-                            <a href="{{ route('forgot.password') }}" class="btn btn-link text-sm">Forgot Password?</a>
+                            <a href="{{ route('forgot-password') }}" class="btn btn-link text-sm">Forgot Password?</a>
                         </div>
                         <div class="row justify-content-end">
                             <!-- /.col -->

@@ -80,7 +80,7 @@ class AuthController extends Controller
         // if user not found
         if (!$user) {
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'Invalid link');
         }
@@ -94,7 +94,7 @@ class AuthController extends Controller
         // if token invalid
         if (!$token) {
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'Invalid link');
         }
@@ -104,7 +104,7 @@ class AuthController extends Controller
             $token->token_status = 'N';
             $token->save();
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'Link expired, please make a new request');
         }
@@ -159,7 +159,7 @@ class AuthController extends Controller
         // if no user with email
         if (!$user) {
             return redirect()
-                ->route('forgot.password')
+                ->back()
                 ->withInput()
                 ->with('type', 'warning')
                 ->with('message', 'Email not found');
@@ -168,7 +168,7 @@ class AuthController extends Controller
         // if user's email not verified
         if (!$user->email_verified_at) {
             return redirect()
-                ->route('forgot.password')
+                ->back()
                 ->withInput()
                 ->with('type', 'warning')
                 ->with('message', 'Verify your email first');
@@ -182,7 +182,7 @@ class AuthController extends Controller
         MailHelper::send_token_to_user($user,'forgot_password',$data);
 
         return redirect()
-            ->route('forgot.password')
+            ->back()
             ->withInput()
             ->with('type', 'success')
             ->with('message', 'Email sent, please check your email');
@@ -197,7 +197,7 @@ class AuthController extends Controller
         // if user not found
         if (!$user) {
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'Invalid link');
         }
@@ -211,7 +211,7 @@ class AuthController extends Controller
         // if token invalid
         if (!$token) {
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'Invalid link');
         }
@@ -221,7 +221,7 @@ class AuthController extends Controller
             $token->token_status = 'N';
             $token->save();
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'Link expired, please make a new request');
         }
@@ -252,7 +252,7 @@ class AuthController extends Controller
         // if token invalid
         if (!$token) {
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'Invalid link');
         }
@@ -262,7 +262,7 @@ class AuthController extends Controller
             $token->token_status = 'N';
             $token->save();
             return redirect()
-                ->route('forgot.password')
+                ->route('forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'Link expired, please make a new request');
         }

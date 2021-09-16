@@ -10,7 +10,7 @@
             @if(session('message'))
             @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
             @endif
-            <form action="{{ route('profile.change.password') }}" method="post" autocomplete="off">
+            <form action="{{ route('profile.change-password') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="card">
                     <div class="card-body">

@@ -93,7 +93,7 @@ class ProfileController extends Controller
         $user = User::findOrFail($id);
         if(!Hash::check($request->input('old_password'), $user->user_password)){
             return redirect()
-                ->route('profile.change.password')
+                ->route('profile.change-password')
                 ->with('type', 'warning')
                 ->with('message', 'Old password incorrect');
         }

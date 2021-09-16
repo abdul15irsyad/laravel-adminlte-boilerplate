@@ -4,7 +4,7 @@
 Hello, {{ $user->user_username }}<br>
 You recently asked to reset your password, click the button below to reset.
 
-@component('mail::button', ['url' => route('reset.password', ['username' => $user->user_username,'token' => $token->token])])
+@component('mail::button', ['url' => route('reset-password', ['username' => $user->user_username,'token' => $token->token])])
 Reset Password
 @endcomponent
 

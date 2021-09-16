@@ -26,7 +26,7 @@
                             </li>
                         </ul>
                         <a href="{{ route('profile.update') }}" class="btn btn-primary btn-block">Edit Profile</a>
-                        <a href="{{ route('profile.change.password') }}" class="btn btn-primary btn-block">Change Password</a>
+                        <a href="{{ route('profile.change-password') }}" class="btn btn-primary btn-block">Change Password</a>
                         </div>
                         <!-- /.card-body -->
                     </div>

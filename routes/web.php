@@ -9,7 +9,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 // no middleware
-Route::get('/verify-email-process', [AuthController::class, 'verify_email_process'])->name('verify.email.process');
+Route::get('/verify-email-process', [AuthController::class, 'verify_email_process'])->name('verify-email-process');
 
 // not authenticated
 Route::middleware(['guest'])->group(function () {
@@ -19,10 +19,10 @@ Route::middleware(['guest'])->group(function () {
         // auth
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login', [AuthController::class, 'login_process'])->name('login');
-    Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->name('forgot.password');
-    Route::post('/forgot-password-process', [AuthController::class, 'forgot_password_process'])->name('forgot.password.process');
-    Route::get('/reset-password', [AuthController::class, 'reset_password'])->name('reset.password');
-    Route::post('/reset-password-process', [AuthController::class, 'reset_password_process'])->name('reset.password.process');
+    Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->name('forgot-password');
+    Route::post('/forgot-password-process', [AuthController::class, 'forgot_password_process'])->name('forgot-password.process');
+    Route::get('/reset-password', [AuthController::class, 'reset_password'])->name('reset-password');
+    Route::post('/reset-password-process', [AuthController::class, 'reset_password_process'])->name('reset-password.process');
 });
 
 // authenticated
@@ -54,13 +54,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}/update', [RoleController::class, 'save'])->name('roles.update');
         Route::get('/{id}/delete', [RoleController::class, 'delete'])->name('roles.delete');
     });
+    Route::prefix('dashboard')->group(function(){
+        Route::get('/', [ActivityLogController::class, 'index'])->name('activity-log');
+    });
     // profile
     Route::prefix('profile')->group(function(){
         Route::get('/', [ProfileController::class, 'index'])->name('profile');
         Route::get('/update', [ProfileController::class, 'update'])->name('profile.update');
         Route::post('/update', [ProfileController::class, 'save'])->name('profile.update');
-        Route::get('/change-password', [ProfileController::class, 'change_password'])->name('profile.change.password');
-        Route::post('/change-password', [ProfileController::class, 'save_password'])->name('profile.change.password');
+        Route::get('/change-password', [ProfileController::class, 'change_password'])->name('profile.change-password');
+        Route::post('/change-password', [ProfileController::class, 'save_password'])->name('profile.change-password');
     });
     // auth
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

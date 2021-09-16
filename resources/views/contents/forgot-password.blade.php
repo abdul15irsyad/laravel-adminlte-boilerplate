@@ -15,7 +15,7 @@
                     @include('includes.alert-dismissible',['message'=>session('message'),'type'=>session('type')])
                     @endif
                     <p class="text-center text-sm">We will send link by email to change your password</p>
-                    <form action="{{ route('forgot.password.process') }}" method="post" autocomplete="off">
+                    <form action="{{ route('forgot-password.process') }}" method="post" autocomplete="off">
                         @csrf
                         <div class="input-group mb-3">
                             <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="example@email.com" value="{{ old('email') }}">
