@@ -21,10 +21,7 @@
                         <thead class="thead-dark">
                             <tr class="text-center">
                                 <th>#</th>
-                                <th>User</th>
-                                <th>Description</th>
-                                <th>On</th>
-                                <th>Datetime</th>
+                                <th>Permission Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -43,14 +40,13 @@
 
 @section('content-javascript')
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-print-1.6.5/fh-3.1.8/r-2.2.7/sp-1.2.2/datatables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
     $(function () {
         let table = $('.yajra-datatable').DataTable({
             ...defaultDatatables,
             order: false,
             ajax: {
-                url: "{{ route('api.v1.activities') }}",
+                url: "{{ route('api.v1.permissions') }}",
                 dataType: "json",
                 type: "POST",
                 data: {
@@ -59,27 +55,7 @@
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-                {data: 'causer.user_username', name: 'causer.user_username'},
-                {data: 'description', name: 'description'},
-                {
-                    data: 'subject', 
-                    name: 'subject',
-                    defaultContent: "-",
-                    render: (data,type,row) => {
-                        console.log(row)
-                        return data?.user_username
-                    }
-                },
-                {
-                    data: 'created_at', 
-                    name: 'created_at',
-                    render: data => {
-                        date = moment(data);
-                        if(moment().diff(date,'months') <= 1) return date.fromNow()
-                        else if(date.year() == moment().year()) return date.format('MMMM Do')
-                        else return date.format('MMMM Do[,] YYYY')
-                    }
-                },
+                {data: 'permission_title', name: 'permission_title'},
                 {
                     data: 'action', 
                     name: 'action', 
@@ -88,7 +64,6 @@
                 },
             ]
         });
-
     });
 </script>
 @endsection

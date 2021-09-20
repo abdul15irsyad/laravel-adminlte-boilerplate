@@ -36,13 +36,19 @@
                                 <p>Roles</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('permission') }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('permissions')]) ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-key"></i>
+                                <p>Permissions</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('activity-log') }}" class="nav-link {{ $title=='Activity Log' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-wave-square"></i>
+                                <p>Activity Log</p>
+                            </a>
+                        </li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('activity-log') }}" class="nav-link {{ $title=='Activity Log' ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-wave-square"></i>
-                        <p>Activity Log</p>
-                    </a>
                 </li>
             </ul>
         </nav>

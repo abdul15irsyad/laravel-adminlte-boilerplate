@@ -107,7 +107,7 @@ class UserController extends Controller
         $user->user_name = $request->input('name');
         $user->user_username = $request->input('username');
         $user->user_email = $request->input('email');
-        $user->user_password  = Hash::make($request->input('password'));
+        $user->user_password = Hash::make($request->input('password'));
         $role = Role::where('role_slug',$request->input('role'))->first();
         $user->role_id = $role->id;
         $user->save();
@@ -119,6 +119,13 @@ class UserController extends Controller
         ];
         MailHelper::send_token_to_user($user,'email_verification',$data);
         
+        // input activity log
+        $properties = $user->only(['user_name', 'user_username','user_email', 'role_id']);
+        activity()
+            ->on($user)
+            ->withProperties($properties)
+            ->event('created')
+            ->log('has created user');
 
         return redirect()
             ->route('users')
@@ -211,7 +218,14 @@ class UserController extends Controller
                 ->with('message', 'Delete user failed, there is must be at least 1 super admin');
         }
 
+        $deleted_user = $user->replicate();
         $user->delete();
+        
+        // input activity log
+        activity()
+            ->on($deleted_user)
+            ->event('deleted')
+            ->log('has deleted user');
         
         return redirect()
             ->route('users')

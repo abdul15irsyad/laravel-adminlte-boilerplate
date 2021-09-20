@@ -5,6 +5,7 @@ use App\Http\Controllers\{
     ActivityLogController,
     AuthController,
     DashboardController,
+    PermissionController,
     PermissionRoleController,
     ProfileController,
     RoleController,
@@ -57,6 +58,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{id}/update', [RoleController::class, 'save'])->name('roles.update');
         Route::get('/{id}/delete', [RoleController::class, 'delete'])->name('roles.delete');
     });
+    // roles
+    Route::prefix('permissions')->group(function(){
+        Route::get('/', [PermissionController::class, 'index'])->name('permission');
+        // Route::get('/create', [PermissionController::class, 'create'])->name('permission.create');
+        // Route::post('/create', [PermissionController::class, 'store'])->name('permission.create');
+        Route::get('/{id}/detail', [PermissionController::class, 'detail'])->name('permission.detail');
+    });
+    // activity log
     Route::prefix('activity-log')->group(function(){
         Route::get('/', [ActivityLogController::class, 'index'])->name('activity-log');
         Route::get('/{id}/detail', [ActivityLogController::class, 'detail'])->name('activity-log.detail');

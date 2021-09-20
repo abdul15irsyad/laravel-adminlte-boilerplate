@@ -101,7 +101,7 @@ class RoleController extends Controller
             'slug.unique' => 'role name is already exist',
             'permission.*.exists' => 'some permission didn\'t exist',
         ]);
-        
+
         $role = new Role;
         $role->role_name = $request->input('name');
         $role->role_slug = $request->input('slug');
@@ -115,6 +115,15 @@ class RoleController extends Controller
             $permission_role->permission_id = $permission->id;
             $permission_role->save();
         }
+
+        // input activity log
+        $properties = $role->only(['role_name','role_desc']);
+        $properties['permission'] = $request->input('permission');
+        activity()
+            ->on($role)
+            ->withProperties($properties)
+            ->event('created')
+            ->log('has created role');
         
         return redirect()
             ->route('roles')
@@ -162,7 +171,9 @@ class RoleController extends Controller
             'permission.*.exists' => 'some permission didn\'t exist',
         ]);
 
-        $role = Role::findOrFail($id);
+        $role = Role::with(['permissions'])->findOrFail($id);
+        dd($role);
+        $old_role = $role->replicate();
         $role->role_name = $request->input('name');
         $role->role_slug = $request->input('slug');
         $role->role_desc = $request->input('desc');
@@ -187,6 +198,20 @@ class RoleController extends Controller
                 }
             }
         }
+
+        // input activity log
+        $properties = [
+            'old' => [
+                ...$old_role->only(['role_name', 'role_desc']),
+                'permission' => $request->input('perm')
+            ],
+            'new' => $user->only(['role_name', 'role_desc']),
+        ];
+        activity()
+            ->on($user)
+            ->withProperties($properties)
+            ->event('updated')
+            ->log('has updated user');
         
         return redirect()
             ->route('roles')

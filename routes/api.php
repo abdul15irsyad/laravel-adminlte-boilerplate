@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     ActivityLogController,
     RoleController,
     UserController,
+    PermissionController,
 };
 
 /*
@@ -27,6 +28,10 @@ Route::group(['prefix'=>'v1','middleware'=>'api'],function () {
     // roles
     Route::prefix('roles')->group(function(){
         Route::post('/', [RoleController::class, 'get_roles'])->name('api.v1.roles');
+    });
+    // permissions
+    Route::prefix('permissions')->group(function(){
+        Route::post('/', [PermissionController::class, 'get_permissions'])->name('api.v1.permissions');
     });
     // activity log
     Route::prefix('activity-log')->group(function(){
