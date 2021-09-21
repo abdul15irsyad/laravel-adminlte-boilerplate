@@ -11,7 +11,7 @@ class ActivityLogController extends Controller
     public function get_activities(Request $request)
     {
         if ($request->ajax()) {
-            $data = Activity::with(['causer','subject'])->orderBy('created_at','desc')->get();
+            $data = Activity::with(['causer','subject'])->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

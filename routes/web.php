@@ -60,10 +60,10 @@ Route::middleware(['auth'])->group(function () {
     });
     // roles
     Route::prefix('permissions')->group(function(){
-        Route::get('/', [PermissionController::class, 'index'])->name('permission');
-        // Route::get('/create', [PermissionController::class, 'create'])->name('permission.create');
-        // Route::post('/create', [PermissionController::class, 'store'])->name('permission.create');
-        Route::get('/{id}/detail', [PermissionController::class, 'detail'])->name('permission.detail');
+        Route::get('/', [PermissionController::class, 'index'])->name('permissions');
+        // Route::get('/create', [PermissionController::class, 'create'])->name('permissions.create');
+        // Route::post('/create', [PermissionController::class, 'store'])->name('permissions.create');
+        Route::get('/{id}/detail', [PermissionController::class, 'detail'])->name('permissions.detail');
     });
     // activity log
     Route::prefix('activity-log')->group(function(){

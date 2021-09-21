@@ -23,7 +23,6 @@
                                 <th>#</th>
                                 <th>User</th>
                                 <th>Description</th>
-                                <th>On</th>
                                 <th>Datetime</th>
                                 <th>Action</th>
                             </tr>
@@ -48,7 +47,7 @@
     $(function () {
         let table = $('.yajra-datatable').DataTable({
             ...defaultDatatables,
-            order: false,
+            order: [[3,'desc']],
             ajax: {
                 url: "{{ route('api.v1.activities') }}",
                 dataType: "json",
@@ -58,18 +57,15 @@
                 },
             },
             columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
                 {data: 'causer.user_username', name: 'causer.user_username'},
                 {data: 'description', name: 'description'},
-                {
-                    data: 'subject', 
-                    name: 'subject',
-                    defaultContent: "-",
-                    render: (data,type,row) => {
-                        console.log(row)
-                        return data?.user_username
-                    }
-                },
+                // {
+                //     data: 'subject', 
+                //     name: 'subject',
+                //     defaultContent: "-",
+                //     render: (data,type,row) => data?.user_username
+                // },
                 {
                     data: 'created_at', 
                     name: 'created_at',

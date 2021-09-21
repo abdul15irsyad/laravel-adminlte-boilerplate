@@ -71,6 +71,7 @@
     $(function () {
         let table = $('.yajra-datatable').DataTable({
             ...defaultDatatables,
+            order: [[0,'asc']],
             ajax: {
                 url: "{{ route('api.v1.roles') }}",
                 dataType: "json",
@@ -80,7 +81,7 @@
                 },
             },
             columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
                 {data: 'role_name', name: 'role_name'},
                 {
                     data: 'permission_roles', 

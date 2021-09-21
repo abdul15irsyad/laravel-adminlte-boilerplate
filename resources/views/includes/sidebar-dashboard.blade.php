@@ -37,7 +37,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('permission') }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('permissions')]) ? 'active' : '' }}">
+                            <a href="{{ route('permissions') }}" class="nav-link {{ in_array($title,[...TitleHelper::all_title('permissions')]) ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-key"></i>
                                 <p>Permissions</p>
                             </a>

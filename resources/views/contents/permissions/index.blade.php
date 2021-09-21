@@ -22,6 +22,7 @@
                             <tr class="text-center">
                                 <th>#</th>
                                 <th>Permission Name</th>
+                                <th>Roles</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -44,7 +45,7 @@
     $(function () {
         let table = $('.yajra-datatable').DataTable({
             ...defaultDatatables,
-            order: false,
+            order: [[0,'asc']],
             ajax: {
                 url: "{{ route('api.v1.permissions') }}",
                 dataType: "json",
@@ -54,8 +55,26 @@
                 },
             },
             columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
                 {data: 'permission_title', name: 'permission_title'},
+                {
+                    data: 'permission_roles', 
+                    name: 'permission_roles',
+                    orderable: false,
+                    render: (data,type,row) => {
+                        let pillText = text => '<div class="text-pill text-xs bg-light-green">' + text + '</div>'
+                        if(data.length == 0) return '<span class="text-sm">No Permission</span>'
+                        else{
+                            // max show permission
+                            let result = '', max = 4
+                            data.forEach((permission_role,index)=>{
+                                if(index < max) result += pillText(permission_role.role.role_name)
+                            })
+                            result += (data.length > max) ? pillText('etc . . .') : ''
+                            return result
+                        }
+                    }
+                },
                 {
                     data: 'action', 
                     name: 'action', 

@@ -82,7 +82,7 @@
                 },
             },
             columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+                {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
                 {data: 'user_name', name: 'user_name'},
                 {data: 'user_username', name: 'user_username'},
                 {data: 'user_email', name: 'user_email'},
@@ -90,8 +90,6 @@
                 {
                     data: 'user_status',
                     name: 'user_status',
-                    orderable: false,
-                    searchable: true,
                     render: (data, type, row)=>{
                         let color = data == 'Active' ? "green" : "red"
                         return '<span class="text-pill text-xs bg-light-' + color + '">' + data + '</span>'

@@ -24,7 +24,14 @@
                     @include('includes.info-box',[
                         'icon'=>'fas fa-user-cog',
                         'big_text'=> $roles->count(),
-                        'text'=>'Role'])
+                        'text'=>'Roles'])
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    @include('includes.info-box',[
+                        'icon'=>'fas fa-key',
+                        'big_text'=> $permissions->count(),
+                        'text'=>'Permissions'])
                 </div>
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">

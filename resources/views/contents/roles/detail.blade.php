@@ -72,11 +72,6 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/b-1.6.5/b-flash-1.6.5/b-print-1.6.5/fh-3.1.8/r-2.2.7/sp-1.2.2/datatables.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('.select2').select2({
-            placeholder: 'Select Permissions',
-            theme: 'bootstrap4',
-        });
-
         let table = $('.yajra-datatable').DataTable({
             ...defaultDatatables,
             pageLength: 5,

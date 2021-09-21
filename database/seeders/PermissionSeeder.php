@@ -41,6 +41,12 @@ class PermissionSeeder extends Seeder
             [
                 "permission_title" => "Delete Role",
             ],
+            [
+                "permission_title" => "Read Permission",
+            ],
+            [
+                "permission_title" => "Read Activity Log",
+            ],
         ];
 
         foreach($rows as $row){

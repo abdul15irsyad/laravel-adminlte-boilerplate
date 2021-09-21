@@ -18,7 +18,7 @@ class PermissionRoleSeeder extends Seeder
         $rows = [
             [
                 "role_id" => 1,
-                "permission_ids" => [1,2,3,4,5,6,7,8],
+                "permission_ids" => [1,2,3,4,5,6,7,8,9,10],
             ],
             [
                 "role_id" => 2,
@@ -26,7 +26,7 @@ class PermissionRoleSeeder extends Seeder
             ],
             [
                 "role_id" => 3,
-                "permission_ids" => [5,6,7],
+                "permission_ids" => [9,10],
             ],
         ];
 

@@ -109,6 +109,9 @@ a.inherit{
   text-align: center;
   max-width: 400px;
 }
+.table td:last-child,.table th:last-child{
+  min-width: 100px;
+}
 .table .btn.btn-transparent{
   padding-left: 5.75px !important;
   padding-right: 5.75px !important;
