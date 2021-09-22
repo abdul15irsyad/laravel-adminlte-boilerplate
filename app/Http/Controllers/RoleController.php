@@ -11,7 +11,7 @@ class RoleController extends Controller
     public function get_roles(Request $request)
     {
         if ($request->ajax()) {
-            $data = Role::with(['users','permission_roles','permission_roles.permission'])->get();
+            $data = Role::with(['users','permissions'])->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -58,7 +58,7 @@ class RoleController extends Controller
     public function detail(Request $request)
     {
         $id = $request->route('id');
-        $role = Role::with(['users','permission_roles.permission'])->findOrFail($id);
+        $role = Role::with(['users','permissions'])->findOrFail($id);
         $data = [
             'title' => 'Detail Role',
             'breadcumbs' => [
@@ -108,7 +108,7 @@ class RoleController extends Controller
         $role->role_desc = $request->input('desc');
         $role->save();
         
-        foreach($request->input('permission') as $permission_slug){
+        foreach($request->input('permission') ?? [] as $permission_slug){
             $permission_role = new PermissionRole;
             $permission_role->role_id = $role->id;
             $permission = Permission::where('permission_slug',$permission_slug)->first();
@@ -117,13 +117,14 @@ class RoleController extends Controller
         }
 
         // input activity log
-        $properties = $role->only(['role_name','role_desc']);
-        $properties['permission'] = $request->input('permission');
+        $properties = array_merge($role->only(['role_name','role_desc']),[
+            'permissions' => $role->permissions->map(fn($permission)=>$permission->permission_title)
+        ]);
         activity()
             ->on($role)
             ->withProperties($properties)
             ->event('created')
-            ->log('has created role');
+            ->log('has created role ('. $role->role_name . ')');
         
         return redirect()
             ->route('roles')
@@ -134,10 +135,10 @@ class RoleController extends Controller
     public function update(Request $request)
     {
         $id = $request->route('id');
-        $role = Role::with(['permission_roles.permission'])->findOrFail($id);
+        $role = Role::with(['permissions'])->findOrFail($id);
         $role_permissions = [];
-        foreach($role->permission_roles->toArray() as $permission_role){
-            array_push($role_permissions,$permission_role['permission']['permission_slug']);
+        foreach($role->permissions as $permission){
+            array_push($role_permissions,$permission->permission_slug);
         }
         $permissions = Permission::all();
         $data = [
@@ -172,7 +173,6 @@ class RoleController extends Controller
         ]);
 
         $role = Role::with(['permissions'])->findOrFail($id);
-        dd($role);
         $old_role = $role->replicate();
         $role->role_name = $request->input('name');
         $role->role_slug = $request->input('slug');
@@ -185,33 +185,33 @@ class RoleController extends Controller
             }
         }
         
-        if(sizeof($request->input('permission') ?? [])>0){
-            foreach($request->input('permission') as $permission_slug){
+        foreach($request->input('permission') ?? [] as $permission_slug){
+            $permission = Permission::where('permission_slug',$permission_slug)->first();
+            $permission_role = $role->permission_roles->where('permission_id',$permission->id)->first();
+            if(!$permission_role){
+                $permission_role = new PermissionRole;
+                $permission_role->role_id = $role->id;
                 $permission = Permission::where('permission_slug',$permission_slug)->first();
-                $permission_role = $role->permission_roles->where('permission_id',$permission->id)->first();
-                if(!$permission_role){
-                    $permission_role = new PermissionRole;
-                    $permission_role->role_id = $role->id;
-                    $permission = Permission::where('permission_slug',$permission_slug)->first();
-                    $permission_role->permission_id = $permission->id;
-                    $permission_role->save();
-                }
+                $permission_role->permission_id = $permission->id;
+                $permission_role->save();
             }
         }
 
         // input activity log
-        $properties = [
-            'old' => [
-                ...$old_role->only(['role_name', 'role_desc']),
-                'permission' => $request->input('perm')
-            ],
-            'new' => $user->only(['role_name', 'role_desc']),
-        ];
+        // old data
+        $properties['old'] = array_merge($old_role->only(['role_name', 'role_desc']),[
+            'permissions' => $old_role->permissions->map(fn($permission)=>$permission->permission_title)
+        ]);
+        // new data
+        $role = Role::with(['permissions'])->findOrFail($role->id);
+        $properties['new'] = array_merge($role->only(['role_name', 'role_desc']),[
+            'permissions' => $role->permissions->map(fn($permission)=>$permission->permission_title)
+        ]);
         activity()
-            ->on($user)
+            ->on($role)
             ->withProperties($properties)
             ->event('updated')
-            ->log('has updated user');
+            ->log('has updated role ('. $role->role_name . ')');
         
         return redirect()
             ->route('roles')
@@ -222,15 +222,29 @@ class RoleController extends Controller
     public function delete(Request $request)
     {
         $id = $request->route('id');
-        $role = Role::findOrFail($id);
+        $role = Role::with(['users'])->findOrFail($id);
         if($role->role_slug == 'super-admin'){
             return redirect()
                 ->route('roles')
                 ->with('type', 'danger')
                 ->with('message', 'Delete role failed, cannot delete super admin');
         }
+        if($role->users->count()>0){
+            return redirect()
+                ->route('roles')
+                ->with('type', 'danger')
+                ->with('message', 'Delete role failed, there are 2 users in this role');
+        }
 
+        $properties = $role->only(['id','role_name']);
         $role->delete();
+
+        // input activity log
+        activity()
+            ->on($role)
+            ->withProperties($properties)
+            ->event('deleted')
+            ->log('has deleted role ('. $role->role_name . ')');
         
         return redirect()
             ->route('roles')

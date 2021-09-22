@@ -19,7 +19,6 @@ class Token extends Model
         'used_at',
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     public function user()

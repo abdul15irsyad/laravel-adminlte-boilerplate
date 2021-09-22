@@ -54,7 +54,6 @@
             <div class="modal-body">
                 <p class="mb-0">Are you sure want to delete <b class="nickname"></b> ?</p>
                 <p class="text-sm text-danger">This action cannot be undo!</p>
-                @include('includes.alert',['message'=>'','type'=>'danger','class'=>'p-2 mb-1 message-warning'])
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-transparent" data-dismiss="modal">Cancel</button>
@@ -84,8 +83,8 @@
                 {data: 'DT_RowIndex', name: 'DT_RowIndex', searchable: false},
                 {data: 'role_name', name: 'role_name'},
                 {
-                    data: 'permission_roles', 
-                    name: 'permission_roles', 
+                    data: 'permissions', 
+                    name: 'permissions', 
                     orderable: false,
                     render: (data,type,row) => {
                         let pillText = text => '<div class="text-pill text-xs bg-light-green">' + text + '</div>'
@@ -93,8 +92,8 @@
                         else{
                             // max show permission
                             let result = '', max = 4
-                            data.forEach((permission_role,index)=>{
-                                if(index < max) result += pillText(permission_role.permission.permission_title)
+                            data.forEach((permission,index)=>{
+                                if(index < max) result += pillText(permission.permission_title)
                             })
                             result += (data.length > max) ? pillText('etc . . .') : ''
                             return result
@@ -105,7 +104,7 @@
                     data: 'users.length', 
                     name: 'users_length',
                     render: (data, type, row) => {
-                        if(data == 0) return '<span class="text-sm text-secondary">empty</span>'
+                        if(data == 0) return '<span class="text-sm text-secondary">no user</span>'
                         return data > 1 ? (data + ' users') : (data + ' user')
                     }
                 },
@@ -124,23 +123,13 @@
             let btnDeletes = document.querySelectorAll('.btn-delete')
             let deleteModal = document.querySelector('#modal-delete')
             let nickname = deleteModal.querySelector('.nickname')
-            let messageWarning = deleteModal.querySelector('.message-warning')
             btnDeletes.forEach(btnDelete => {
                 let dataLink = btnDelete.getAttribute('data-link')
                 let dataNickname = btnDelete.getAttribute('data-nickname')
-                let dataUserCount = parseInt(btnDelete.getAttribute('data-user-count'))
                 btnDelete.addEventListener('click', e => {
                     e.preventDefault()
                     // show confirmation modal on delete
                     nickname.innerHTML = dataNickname
-                    // if user in deleted role not empty
-                    console.log(dataUserCount)
-                    if(dataUserCount > 0){
-                        messageWarning.style.display = 'block'
-                        messageWarning.innerHTML = `There is ${dataUserCount} users, delete the role will also delete the users!`
-                    } else {
-                        messageWarning.style.display = 'none'
-                    }
                     $('#modal-delete').modal('show')
                     let btnDeleteModal = deleteModal.querySelector('.btn-delete-modal')
                     btnDeleteModal.setAttribute('href',dataLink)

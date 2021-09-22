@@ -44,7 +44,8 @@ class PermissionController extends Controller
     public function detail(Request $request)
     {
         $id = $request->route('id');
-        $permission = Permission::with(['permission_roles.role'])->findOrFail($id);
+        $permission = Permission::with(['roles'])->findOrFail($id);
+        dd($permission->toArray());
         $data = [
             'title' => 'Detail Role',
             'breadcumbs' => [

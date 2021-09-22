@@ -43,7 +43,39 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header ui-sortable-handle" style="cursor: move;">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-pie mr-1"></i>
+                            Sales
+                        </h3>
+                        <div class="card-tools">
+                            <ul class="nav nav-pills ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
+                            </li>
+                            </ul>
+                        </div>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                        <div class="tab-content p-0">
+                            <!-- Morris chart - Sales -->
+                            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="revenue-chart-canvas" height="300" style="height: 300px; display: block; width: 577px;" width="577" class="chartjs-render-monitor"></canvas>
+                            </div>
+                            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <canvas id="sales-chart-canvas" height="300" style="height: 300px; display: block; width: 577px;" class="chartjs-render-monitor" width="577"></canvas>
+                            </div>
+                        </div>
+                        </div><!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
         </div>
         <!--/. container-fluid -->
     </section>
@@ -55,65 +87,5 @@
 @section('content-javascript')
 <!-- ChartJS -->
 <script src="{{ asset('adminlte/plugins/chart.js/Chart.min.js') }}"></script>
-<script type="text/javascript">
-    var ctx = document.getElementById('lineChart');
-    var myChart = new Chart(ctx, {
-        type: 'line', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-            datasets: [{
-                label: 'Voucher',
-                data: [ 12, 8, 6, 9, 10, 1, 45, 12, 22, 11, 7, 34],
-                backgroundColor: '#007bff30',
-                borderWidth: 0,
-                borderColor: '#777',
-                hoverBorderWidth: 2,
-                hoverBorderColor: '#000'
-            }]
-        },
-        options: {
-            aspectRatio: 2,
-            responsive: true,
-            title: {
-                display: false,
-                text: 'Voucher yang dibuat oleh pelanggan',
-                fontSize: 12,
-                responsive: true
-            },
-            scales: {
-                yAxes: [{
-                    type: 'linear',
-                    position: 'left',
-                    ticks: {
-                        min: 0,
-                        stepSize: 5
-                    },
-                    gridLines: {
-                        display: false,
-                        color: '#007bff'
-                    }
-                }],
-            },
-            legend: {
-                display: false,
-                position: 'top',
-                labels: {
-                    fontColor: '#000'
-                }
-            },
-            layout: {
-                padding: {
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    top: 0
-                }
-            },
-            tooltips: {
-                enabled: true,
-                mode: 'nearest'
-            }
-        }
-    });
-</script>
+<script src="{{ asset('js/chart.js') }}"></script>
 @endsection

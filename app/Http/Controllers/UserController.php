@@ -120,12 +120,12 @@ class UserController extends Controller
         MailHelper::send_token_to_user($user,'email_verification',$data);
         
         // input activity log
-        $properties = $user->only(['user_name', 'user_username','user_email', 'role_id']);
+        $properties = $user->only(['id','user_name', 'user_username','user_email', 'role_id']);
         activity()
             ->on($user)
             ->withProperties($properties)
             ->event('created')
-            ->log('has created user');
+            ->log('has created user ('. $user->user_username . ')');
 
         return redirect()
             ->route('users')
@@ -189,6 +189,7 @@ class UserController extends Controller
 
         // input activity log
         $properties = [
+            'id' => $user->id,
             'old' => $old_user->only(['user_name', 'user_username', 'user_email', 'role_id', 'user_status']),
             'new' => $user->only(['user_name', 'user_username', 'user_email', 'role_id', 'user_status']),
         ];
@@ -197,7 +198,7 @@ class UserController extends Controller
             ->on($user)
             ->withProperties($properties)
             ->event('updated')
-            ->log('has updated user');
+            ->log('has updated user ('. $user->user_username . ')');
 
         return redirect()
             ->route('users')
@@ -218,14 +219,15 @@ class UserController extends Controller
                 ->with('message', 'Delete user failed, there is must be at least 1 super admin');
         }
 
-        $deleted_user = $user->replicate();
+        $properties = $user->only(['id','user_username']);
         $user->delete();
         
         // input activity log
         activity()
-            ->on($deleted_user)
+            ->on($user)
+            ->withProperties($properties)
             ->event('deleted')
-            ->log('has deleted user');
+            ->log('has deleted user ('. $user->user_username . ')');
         
         return redirect()
             ->route('users')

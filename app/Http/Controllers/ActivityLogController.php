@@ -45,6 +45,7 @@ class ActivityLogController extends Controller
     {
         $id = $request->route('id');
         $activity_log = Activity::with(['causer','subject'])->findOrFail($id);
+        // dd($activity_log);
         $data = [
             'title' => 'Detail Activity Log',
             'breadcumbs' => [
@@ -54,6 +55,6 @@ class ActivityLogController extends Controller
             ],
             'activity_log' => $activity_log,
         ];
-        return view('contents.activity-log.index', $data);
+        return view('contents.activity-log.detail', $data);
     }
 }
